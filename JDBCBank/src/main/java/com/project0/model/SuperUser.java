@@ -27,7 +27,7 @@ public class SuperUser implements Serializable {
 		InputStream in = null;
 		Properties props = new Properties();
 		try {
-			in = new FileInputStream(new File("src/main/resources/connection.properties").getAbsolutePath());
+			in = new FileInputStream(new File("src/main/resources/admin.properties").getAbsolutePath());
 			props.load(in);
 			this.masterID = props.getProperty("jdbc.masterID");
 			this.masterPassWord = props.getProperty("jdbc.masterPassword");

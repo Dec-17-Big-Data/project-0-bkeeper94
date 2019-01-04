@@ -12,21 +12,21 @@ public class BankMember implements Serializable{
 	
 	private Integer userID;
 	private String userName;
-	private String passWord;
 	private String firstName;
 	private String lastName;
+	private String passWord;
 	private String pinNumber;
 	
 	public BankMember() {
 		
 	}
 
-	public BankMember(Integer userID, String userName, String passWord, String firstName, String lastName, String pinNumber) {
+	public BankMember(Integer userID, String userName, String firstName, String lastName, String passWord, String pinNumber) {
 		this.userID = userID;
 		this.userName = userName;
-		this.passWord = passWord;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.passWord = passWord;
 		this.pinNumber = pinNumber;
 	}
 

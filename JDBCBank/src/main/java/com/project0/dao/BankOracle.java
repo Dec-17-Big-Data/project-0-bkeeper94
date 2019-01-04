@@ -34,7 +34,7 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<BankMember> getBankMember(String userName) {
-		log.traceEntry("name = {}", userName);
+		log.traceEntry("getBankMember: " + "Parameter= {}", userName);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -57,7 +57,7 @@ public class BankOracle implements BankDao {
 			}
 
 			if (member == null) {
-				log.traceExit(Optional.empty());
+				log.traceExit(Optional.of(new BankMember()));
 				return Optional.of(new BankMember());
 			}
 
@@ -74,7 +74,7 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<BankAccount> getBankAccount(String accountNumber) {
-		log.traceEntry("name = {}", accountNumber);
+		log.traceEntry("getBankAccount: " + "Parameter= {}", accountNumber);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -111,9 +111,9 @@ public class BankOracle implements BankDao {
 		return Optional.empty();
 
 	}
-	
+
 	public Optional<List<BankMember>> getAllMembers() {
-		log.traceEntry();
+		log.traceEntry("getAllMembers: ");
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -133,7 +133,7 @@ public class BankOracle implements BankDao {
 				bl.add(new BankMember(rs.getInt("member_id"), rs.getString("user_name"), rs.getString("first_name"),
 						rs.getString("last_name"), rs.getString("user_password"), rs.getString("pin_number")));
 			}
-			
+
 			return log.traceExit(Optional.of(bl));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -142,12 +142,12 @@ public class BankOracle implements BankDao {
 
 		log.traceExit(Optional.empty());
 		return Optional.empty();
-		
+
 	}
-	
+
 	@Override
 	public Optional<List<BankAccount>> getAMembersAccounts(BankMember member) {
-		log.traceEntry("name = {}", member.toString());
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", member.toString());
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -171,7 +171,7 @@ public class BankOracle implements BankDao {
 
 			if (bl.isEmpty()) {
 				log.traceExit(Optional.of(new ArrayList<BankAccount>()));
-				return Optional.empty();
+				return Optional.of(new ArrayList<BankAccount>());
 			}
 
 			return log.traceExit(Optional.of(bl));
@@ -188,16 +188,12 @@ public class BankOracle implements BankDao {
 	@Override
 	public Optional<Integer> addNewUser(String firstName, String lastName, String userName, String passWord,
 			String pinNumber) {
-		log.traceEntry("name = {}", firstName);
-		log.traceEntry("name = {}", lastName);
-		log.traceEntry("name = {}", userName);
-		log.traceEntry("name = {}", passWord);
-		log.traceEntry("name = {}", pinNumber);
 
-		if (getBankMember(userName).isPresent()) {
-			log.traceExit(Optional.empty());
-			return Optional.of(-1);
-		}
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", firstName);
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", lastName);
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", userName);
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", passWord);
+		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", pinNumber);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -216,9 +212,9 @@ public class BankOracle implements BankDao {
 			cb.setString(5, pinNumber);
 			cb.registerOutParameter(6, java.sql.Types.INTEGER);
 			cb.execute();
-			int ID = cb.getInt(6);
+			int result = cb.getInt(6);
 
-			return log.traceExit(Optional.of(ID));
+			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
 			log.error("SQL exception occurred", e);
@@ -231,9 +227,9 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> openNewBankAccount(BankMember member, String accountType, Double amount) {
-		log.traceEntry("name = {}", member.toString());
-		log.traceEntry("name = {}", accountType);
-		log.traceEntry("name = {}", amount);
+		log.traceEntry("openNewBankAccount: " + "Parameter= {}", member.toString());
+		log.traceEntry("openNewBankAccount: " + "Parameter= {}", accountType);
+		log.traceEntry("openNewBankAccount: " + "Parameter= {}", amount);
 
 		// generate bank account number (random 10 digit number)
 		String[] accountNoArray = new String[10];
@@ -255,8 +251,6 @@ public class BankOracle implements BankDao {
 		}
 
 		try {
-			int ID = 0;
-			int oldNumAccounts = getAMembersAccounts(member).get().size();
 			String sql = "Call add_account(?,?,?,?,?)";
 			CallableStatement cb = con.prepareCall(sql);
 			cb.setString(1, accountNo);
@@ -265,16 +259,9 @@ public class BankOracle implements BankDao {
 			cb.setDouble(4, amount);
 			cb.registerOutParameter(5, java.sql.Types.INTEGER);
 			cb.execute();
-			ID = cb.getInt(5);
-			int newNumAccounts = getAMembersAccounts(member).get().size();
-
-			// check if the number of accounts BankMember member possesses changes
-			if (oldNumAccounts == newNumAccounts) {
-				log.traceExit(Optional.empty());
-				return Optional.empty();
-			}
-
-			return log.traceExit(Optional.of(ID));
+			int result = cb.getInt(5);
+			
+			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
 			log.error("SQL exception occurred", e);
@@ -287,8 +274,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> closeOldBankAccount(BankMember member, String accountNumber) {
-		log.traceEntry("name = {}", member.toString());
-		log.traceEntry("name = {}", accountNumber);
+		log.traceEntry("closeOldBankAccount: " + "Parameter= {}", member.toString());
+		log.traceEntry("closeOldBankAccount: " + "Parameter= {}", accountNumber);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -298,20 +285,18 @@ public class BankOracle implements BankDao {
 		}
 
 		try {
-			int oldNumAccounts = getAMembersAccounts(member).get().size();
-			String sql = "Call delete_account(?)";
+			String sql = "Call delete_account(?,?)";
 			CallableStatement cb = con.prepareCall(sql);
 			cb.setString(1, accountNumber);
+			cb.registerOutParameter(2, java.sql.Types.INTEGER);
 			cb.execute();
-			int newNumAccounts = getAMembersAccounts(member).get().size();
-
-			// check if the number of accounts BankMember member possesses changes
-			if (oldNumAccounts == newNumAccounts) {
-				log.traceExit(Optional.empty());
-				return Optional.empty();
+			int result = cb.getInt(2);
+			
+			if (result == -1) {
+				return log.traceExit(Optional.empty());
 			}
-
-			return log.traceExit(Optional.of(1));
+			
+			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
 			log.error("SQL exception occurred", e);
@@ -324,7 +309,7 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> removeInactiveBankMember(BankMember member) {
-		log.traceEntry("name = {}", member.toString());
+		log.traceEntry("removeInactiveBankMember: " + "Parameter= {}", member.toString());
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -339,18 +324,14 @@ public class BankOracle implements BankDao {
 		}
 
 		try {
-			String sql = "Call delete_member(?)";
+			String sql = "Call delete_member(?,?)";
 			CallableStatement cb = con.prepareCall(sql);
 			cb.setString(1, member.getUserName());
+			cb.registerOutParameter(2, java.sql.Types.INTEGER);
 			cb.execute();
-
-			// check if the record from bankmembers to be deleted still exists
-			if (getBankMember(member.getUserName()).isPresent()) {
-				log.traceExit(Optional.of(0));
-				return Optional.empty();
-			}
-
-			return log.traceExit(Optional.of(1));
+			int result = cb.getInt(2);
+			
+			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
 			log.error("SQL exception occurred", e);
@@ -362,8 +343,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> depositFunds(String accountNumber, Double amount) {
-		log.traceEntry("name = {}", accountNumber);
-		log.traceEntry("name = {}", amount);
+		log.traceEntry("depositFunds: " + "Parameter= {}", accountNumber);
+		log.traceEntry("depositFunds: " + "Parameter= {}", amount);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -394,8 +375,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> withdrawFunds(String accountNumber, Double amount) {
-		log.traceEntry("name = {}", accountNumber);
-		log.traceEntry("name = {}", amount);
+		log.traceEntry("withdrawFunds: " + "Parameter= {}", accountNumber);
+		log.traceEntry("withdrawFunds: " + "Parameter= {}", amount);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -413,12 +394,6 @@ public class BankOracle implements BankDao {
 			cb.execute();
 			Integer result = cb.getInt(3);
 
-			// check if withdraw failed due to insufficient funds
-			if (result == -1) {
-				log.traceExit(Optional.empty());
-				return Optional.empty();
-			}
-
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -432,9 +407,9 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> transferFunds(String sourceAccountNumber, String endAccountNumber, Double amount) {
-		log.traceEntry("name = {}", sourceAccountNumber);
-		log.traceEntry("name = {}", endAccountNumber);
-		log.traceEntry("name = {}", amount);
+		log.traceEntry("transferFunds: " + "Parameter= {}", sourceAccountNumber);
+		log.traceEntry("transferFunds: " + "Parameter= {}", endAccountNumber);
+		log.traceEntry("transferFunds: " + "Parameter= {}", amount);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -453,12 +428,6 @@ public class BankOracle implements BankDao {
 			cb.execute();
 			Integer result = cb.getInt(4);
 
-			// check if withdraw from sourceAccountNumber failed due to insufficient funds
-			if (result == -1) {
-				log.traceExit(Optional.empty());
-				return Optional.empty();
-			}
-
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -471,8 +440,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> updateUserName(BankMember member, String newUserName) {
-		log.traceEntry("name = {}", member.toString());
-		log.traceEntry("name = {}", newUserName);
+		log.traceEntry("updateUserName: " + "Parameter= {}", member.toString());
+		log.traceEntry("updateUserName: " + "Parameter= {}", newUserName);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -502,8 +471,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> updatePassWord(BankMember member, String newPassWord) {
-		log.traceEntry("name = {}", member.toString());
-		log.traceEntry("name = {}", newPassWord);
+		log.traceEntry("updatePassWord: " + "Parameter= {}", member.toString());
+		log.traceEntry("updatePassWord: " + "Parameter= {}", newPassWord);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -533,8 +502,8 @@ public class BankOracle implements BankDao {
 
 	@Override
 	public Optional<Integer> updatePinNumber(BankMember member, String newPinNumber) {
-		log.traceEntry("name = {}", member.toString());
-		log.traceEntry("name = {}", newPinNumber);
+		log.traceEntry("updatePinNumber: " + "Parameter= {}", member.toString());
+		log.traceEntry("updatePinNumber: " + "Parameter= {}", newPinNumber);
 
 		Connection con = ConnectionUtil.getConnection();
 
@@ -551,7 +520,69 @@ public class BankOracle implements BankDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
+			
+			return log.traceExit(Optional.of(result));
+		} catch (SQLException e) {
+			log.catching(e);
+			log.error("SQL exception occurred", e);
+		}
 
+		log.traceExit(Optional.empty());
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Integer> updateFirstName(BankMember member, String newFirstName) {
+		log.traceEntry("updateFirstName: " + "Parameter= {}", member.toString());
+		log.traceEntry("updateFirstName: " + "Parameter= {}", newFirstName);
+
+		Connection con = ConnectionUtil.getConnection();
+
+		if (con == null) {
+			log.traceExit(Optional.empty());
+			return Optional.empty();
+		}
+
+		try {
+			String sql = "Call change_first_name(?,?,?)";
+			CallableStatement cb = con.prepareCall(sql);
+			cb.setString(1, newFirstName);
+			cb.setInt(2, member.getUserID());
+			cb.registerOutParameter(3, java.sql.Types.INTEGER);
+			cb.execute();
+			Integer result = cb.getInt(3);
+			
+			return log.traceExit(Optional.of(result));
+		} catch (SQLException e) {
+			log.catching(e);
+			log.error("SQL exception occurred", e);
+		}
+
+		log.traceExit(Optional.empty());
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Integer> updateLastName(BankMember member, String newLastName) {
+		log.traceEntry("updateLastName: " + "Parameter= {}", member.toString());
+		log.traceEntry("updateLastName: " + "Parameter= {}", newLastName);
+
+		Connection con = ConnectionUtil.getConnection();
+
+		if (con == null) {
+			log.traceExit(Optional.empty());
+			return Optional.empty();
+		}
+
+		try {
+			String sql = "Call change_last_name(?,?,?)";
+			CallableStatement cb = con.prepareCall(sql);
+			cb.setString(1, newLastName);
+			cb.setInt(2, member.getUserID());
+			cb.registerOutParameter(3, java.sql.Types.INTEGER);
+			cb.execute();
+			Integer result = cb.getInt(3);
+			
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);

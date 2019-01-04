@@ -14,25 +14,28 @@ public interface BankDao {
 	Optional<List<BankAccount>> getAMembersAccounts(BankMember member);
 	
 	Optional<List<BankMember>> getAllMembers();
-
+	
 	Optional<Integer> addNewUser(String firstName, String lastName, String userName, String passWord, String pinNumber);
-
+	
 	Optional<Integer> openNewBankAccount(BankMember member, String accountType, Double amount);
-
+	
 	Optional<Integer> closeOldBankAccount(BankMember member, String accountNumber);
-
+	
 	Optional<Integer> removeInactiveBankMember(BankMember member);
-
+	
 	Optional<Integer> depositFunds(String accountNumber, Double amount);
-
+	
 	Optional<Integer> withdrawFunds(String accountNumber, Double amount);
-
+	
 	Optional<Integer> transferFunds(String sourceAccountNumber, String endAccountNumber, Double amount);
-	//handle SQL exception in service
+	
 	Optional<Integer> updateUserName(BankMember member, String newUserName);
-	//handle SQL exception in service
+	
 	Optional<Integer> updatePassWord(BankMember member, String newPassWord);
 	
 	Optional<Integer> updatePinNumber(BankMember member, String newPinNumber);
 	
+	Optional<Integer> updateFirstName(BankMember member, String newFirstName);
+	
+	Optional<Integer> updateLastName(BankMember member, String newLastName);
 }
