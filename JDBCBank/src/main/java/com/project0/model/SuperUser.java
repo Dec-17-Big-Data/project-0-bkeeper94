@@ -56,6 +56,9 @@ public class SuperUser implements Serializable {
 		return masterPin;
 	}
 
+	// No setters for the attributes of SuperUser as they are never modified after assignment
+	// To change these values, change them in the admin.properties file in src/main/resources
+	
 	@Override
 	public String toString() {
 		return "SuperUser [masterID=" + masterID + ", masterPassWord=" + masterPassWord + ", masterPin=" + masterPin
@@ -72,31 +75,5 @@ public class SuperUser implements Serializable {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SuperUser other = (SuperUser) obj;
-		if (masterID == null) {
-			if (other.masterID != null)
-				return false;
-		} else if (!masterID.equals(other.masterID))
-			return false;
-		if (masterPassWord == null) {
-			if (other.masterPassWord != null)
-				return false;
-		} else if (!masterPassWord.equals(other.masterPassWord))
-			return false;
-		if (masterPin == null) {
-			if (other.masterPin != null)
-				return false;
-		} else if (!masterPin.equals(other.masterPin))
-			return false;
-		return true;
-	}
-	
+	// No override for the equals method because this class is a singleton
 }

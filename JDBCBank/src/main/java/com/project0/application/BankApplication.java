@@ -8,8 +8,6 @@ import com.project0.services.*;
 
 public abstract class BankApplication {
 
-	static SuperUser admin = SuperUser.getAdmin();
-
 	// This application assumes that the user will be able to use
 	// the enter key to navigate through each selection
 
@@ -326,6 +324,7 @@ public abstract class BankApplication {
 	}
 
 	public static void main(String[] args) {
+		SuperUser admin = SuperUser.getAdmin();
 		BankService bs = BankService.getService();
 		Scanner UI = new Scanner(System.in);
 		while (true) {

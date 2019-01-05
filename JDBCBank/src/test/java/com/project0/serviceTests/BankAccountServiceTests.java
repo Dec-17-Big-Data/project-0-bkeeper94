@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import org.junit.runners.MethodSorters;
 // Important note: Do not run these JUnit tests individually
 public class BankAccountServiceTests {
 	
-	private static final BankService bs = BankService.getService();
+	private static BankService bs = BankService.getService();
 	
 	// Important note: Do not remove the test user's record from the database
 	private static BankMember testUser = new BankMember(1, "testuser", "joe", 
@@ -27,7 +28,7 @@ public class BankAccountServiceTests {
 	
 	// Makes sure testUser has no accounts in the system prior to starting the unit tests
 	@BeforeClass
-	public static void removeTestUserAccounts(){
+	public static void removeTestUserAccountsBefore(){
 		List<BankAccount> ba = bs.retrieveAMembersBankAccounts(testUser);
 		if (!ba.isEmpty()) {
 			for (BankAccount b : ba) {
@@ -248,5 +249,15 @@ public class BankAccountServiceTests {
 		// Test a withdraw on an account number that does not belong to testUser
 		int expected3 = -1; // When the transfer does not happen for reasons besides overdraw
 		assertEquals(expected3, bs.performWithdraw("0000000000", 100.00));
+	}
+	
+	@AfterClass
+	public static void removeTestUsersAccountsAfter(){
+		List<BankAccount> ba = bs.retrieveAMembersBankAccounts(testUser);
+		if (!ba.isEmpty()) {
+			for (BankAccount b : ba) {
+				bs.closeAccount(testUser, b.getAccountNo());
+			}
+		}	
 	}
 }

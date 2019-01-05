@@ -3,7 +3,7 @@ package com.project0.model;
 import java.io.Serializable;
 
 public class BankMember implements Serializable{
-	//Bean representing all of the columns of the "bankmembers" SQL table
+	// Bean that represents a record in the "bankmembers" SQL table
 	
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class BankMember implements Serializable{
 		return userID;
 	}
 	
-	//no setter for userID as it is the primary key for the "bankmembers" SQL table
+	// No setter for userID as it is the primary key for the "bankmembers" SQL table
 	
 	public String getUserName() {
 		return userName;
@@ -43,15 +43,7 @@ public class BankMember implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-	public String getPassWord() {
-		return passWord;
-	}
-
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -68,6 +60,14 @@ public class BankMember implements Serializable{
 		this.lastName = lastName;
 	}
 
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+	
 	public String getPinNumber() {
 		return pinNumber;
 	}
@@ -75,11 +75,11 @@ public class BankMember implements Serializable{
 	public void setPinNumber(String pinNumber) {
 		this.pinNumber = pinNumber;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "BankMember [userName=" + userName + ", passWord=" + passWord + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", pinNumber=" + pinNumber + "]";
+		return "BankMember [userID=" + userID + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", passWord=" + passWord + ", pinNumber=" + pinNumber + "]";
 	}
 
 	@Override
