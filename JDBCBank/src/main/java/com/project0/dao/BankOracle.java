@@ -261,6 +261,11 @@ public class BankOracle implements BankDao {
 			cb.execute();
 			int result = cb.getInt(5);
 			
+			// Case when account is not opened because the user id is not in the database
+			if (result == -1) {
+				return log.traceExit(Optional.empty());
+			}
+			
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -361,7 +366,7 @@ public class BankOracle implements BankDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
-
+			
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);

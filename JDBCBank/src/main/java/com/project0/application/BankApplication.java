@@ -3,7 +3,6 @@ package com.project0.application;
 import java.util.List;
 import java.util.Scanner;
 
-import com.project0.exceptions.*;
 import com.project0.model.*;
 import com.project0.services.*;
 
@@ -36,27 +35,11 @@ public abstract class BankApplication {
 			}
 		}
 	}
-
-	// Helper method for login authentication (Unit test this method)
-	public static boolean loginAuthentication(BankService bs, String userNameInput, String passWordInput) {
-		try {
-			if (bs.getBankMember(userNameInput).get().toString()
-					.compareToIgnoreCase(new BankMember().toString()) == 0) {
-				throw new LoginMismatchException();
-			} else if (bs.getBankMember(userNameInput).get().getPassWord().compareTo(passWordInput) != 0) {
-				throw new LoginMismatchException();
-			} else {
-				return true;
-			}
-		} catch (LoginMismatchException e) {
-			return false;
-		}
-	}
-
+	
 	// Profile Log-In Screen
 	private static String[] loginScreen(BankService bs, Scanner UI, SuperUser admin) {
-		// first instantiate the array to be returned by this method
-		// this array contains the user name and if the current login was done by admin
+		// Instantiate the array to be returned by this method
+		// This array contains the user name and if the current login was done by admin
 		String[] results = new String[2];
 		results[1] = "false";
 		String userNameInput = "";
@@ -79,14 +62,14 @@ public abstract class BankApplication {
 					System.out.println();
 				continue;
 			}
-			// check for an admin login first
+			// Check for an admin login
 			if (userNameInput.compareTo(admin.getMasterUserName()) == 0
 					&& passWordInput.compareTo(admin.getMasterPassCode()) == 0) {
 				results[0] = admin.getMasterUserName();
 				results[1] = "true";
 				return results;
 			}
-			if (!loginAuthentication(bs, userNameInput, passWordInput)) {
+			if (!bs.loginAuthentication(userNameInput, passWordInput)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
 				System.out.println("The user name or password entered does not match our records.");
@@ -115,16 +98,10 @@ public abstract class BankApplication {
 
 	// User Portal
 	private static String userPortalOverviewScreen(BankService bs, Scanner UI, String userName) {
-		// retrieve the instance of BankAccount created for the user identified by
-		// userName
-		BankMember member = bs.getBankMember(userName).get();
-		System.out.println("Welcome, " + member.getUserName());
-		System.out.println("");
-		System.out.println("");
-		System.out.print("Here is your main user portal. Press the enter key to continue: ");
-		UI.nextLine();
+		// Retrieve the instance of BankAccount created for the user identified by userName
+		BankMember member = bs.getBankMember(userName);
 		List<BankAccount> baList = bs.retrieveAMembersBankAccounts(member);
-		if (baList == null) {
+		if (baList == null || member == null) {
 			System.out.println("");
 			System.out.println("Your accounts could not be displayed due to an unexpected error");
 			System.out.println("Your portal cannot be viewed at this time");
@@ -132,7 +109,12 @@ public abstract class BankApplication {
 			System.out.println("This program will now be closed");
 			return "exit";
 		}
-		// Handle two cases when the user has no bank accounts on file
+		System.out.println("Welcome, " + member.getUserName());
+		System.out.println("");
+		System.out.println("");
+		System.out.print("Here is your main user portal. Press the enter key to continue: ");
+		UI.nextLine();
+		// Handle the two cases when the user has no bank accounts on file
 		if (baList.isEmpty()) {
 			String s = "";
 			while (true) {
@@ -141,7 +123,7 @@ public abstract class BankApplication {
 				System.out.println("You currently have no accounts with us");
 				System.out.println("If you are logging in for the first time, answer with 'first'");
 				System.out.println("If you have closed all your accounts with us and no longer "
-						+ "wish to remain a member, answer with 'out'");
+						+ "wish to remain a member, answer with 'exit'");
 				System.out.print("Type your answer here and then press the enter key: ");
 				s = UI.nextLine();
 				if (s.compareToIgnoreCase("first") == 0) {
@@ -149,7 +131,7 @@ public abstract class BankApplication {
 						System.out.println();
 					bs.openNewAccount(member, UI);
 					break;
-				} else if (s.compareToIgnoreCase("out") == 0) {
+				} else if (s.compareToIgnoreCase("exit") == 0) {
 					if (bs.removeInactiveMember(member, UI)) {
 						System.out.println("");
 						System.out.println("This program will now be closed");

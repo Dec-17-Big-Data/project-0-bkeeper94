@@ -26,15 +26,51 @@ public class BankService {
 
 		return bankService;
 	}
+	
+	// Getter for entries in the bankmembers SQL table (Unit test this method)
+	public BankMember getBankMember(String userName) {
+		try {
+			Optional<BankMember> bankMemberOpt = bankDao.getBankMember(userName);
+			if (bankMemberOpt.isPresent()) {
+				return bankMemberOpt.get();
+			} else {
+				throw new NoSuchElementException();
+			}
+		} catch (NoSuchElementException e) {
+			return null;
+		}
 
-	// Wrap in try catch for NoSuchElementException
-	public Optional<BankMember> getBankMember(String userName) {
-		return bankDao.getBankMember(userName);
+	}
+	
+	// Helper method for application's login screen (Unit test this method)
+	public boolean loginAuthentication(String userNameInput, String passWordInput) {
+		try {
+			BankMember bm = getBankMember(userNameInput);
+			if (bm == null) {
+				throw new LoginMismatchException();
+			} else if (bm.getPassWord().compareTo(passWordInput) != 0) {
+				throw new LoginMismatchException();
+			} else {
+				return true;
+			}
+		} catch (LoginMismatchException e) {
+			return false;
+		}
 	}
 
-	// Wrap in try catch for NoSuchElementException
-	public Optional<BankAccount> getBankAccount(BankMember member, String accountNumber) {
-		return bankDao.getBankAccount(accountNumber);
+	
+	// Getter for entries in the bankaccounts SQL table (Unit test this method)
+	public BankAccount getBankAccount(String accountNumber) {
+		try {
+			Optional<BankAccount> bankAccountOpt = bankDao.getBankAccount(accountNumber);
+			if (bankAccountOpt.isPresent()) {
+				return bankAccountOpt.get();
+			} else {
+				throw new NoSuchElementException();
+			}
+		} catch (NoSuchElementException e) {
+				return null;
+		}
 	}
 
 	// Checks for valid pin input (Unit test this method)
@@ -233,12 +269,15 @@ public class BankService {
 	// this method)
 	public boolean amountInputChecker(String value) {
 		try {
+			if (value.length() == 0) {
+				return false;
+			}
 			for (int i = 0; i < value.length(); i++) {
 				if (value.substring(i, i + 1).matches("[^0-9,$.]")) {
-					throw new NotANumberException();
+					throw new InvalidAmountException();
 				}
 			}
-		} catch (NotANumberException e) {
+		} catch (InvalidAmountException e) {
 			return false;
 		}
 		return true;
@@ -254,7 +293,7 @@ public class BankService {
 	public boolean addAccount(BankMember member, String accountType, Double valueAsNum) {
 		try {
 			Optional<Integer> resultOpt = bankDao.openNewBankAccount(member, accountType, valueAsNum);
-			if (!resultOpt.isPresent() || resultOpt.get() == -1) {
+			if (!resultOpt.isPresent()) {
 				throw new NoSuchElementException();
 			}
 			return true;
@@ -350,7 +389,7 @@ public class BankService {
 	// Account number mismatch checker (Unit test this method)
 	public boolean accountNumberMismatchCheck(String accountNumber) {
 		try {
-			if (!bankDao.getBankAccount(accountNumber).isPresent()) {
+			if (getBankAccount(accountNumber) == null) {
 				throw new AccountNumberMismatchException();
 			}
 		} catch (AccountNumberMismatchException e) {
@@ -361,8 +400,10 @@ public class BankService {
 
 	// Empty account balance checker (Unit test this method)
 	public boolean accountBalanceIsEmpty(String accountNumber) {
-		if (bankDao.getBankAccount(accountNumber).get().getBalance() == 0) {
-			return true;
+		if (getBankAccount(accountNumber) != null) {
+			if (getBankAccount(accountNumber).getBalance() == 0) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -389,11 +430,6 @@ public class BankService {
 			System.out.println("");
 			System.out.println("Checking our records for the account number you entered...");
 			System.out.println("");
-			if (accountNumber.length() == 0) {
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				continue;
-			}
 			if (!checkForValidAcctNo(accountNumber)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
@@ -506,11 +542,6 @@ public class BankService {
 		while (true) {
 			System.out.print("Please type in your 4-digit pin and then press the enter key: ");
 			String pinInput = UI.nextLine();
-			if (pinInput.length() == 0) {
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				continue;
-			}
 			if (!pinInputAuthentication(pinInput)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
@@ -547,11 +578,6 @@ public class BankService {
 			System.out
 					.print("Provide the account number you wish to deposit funds into and then press the enter key: ");
 			String accountNumber = UI.nextLine();
-			if (accountNumber.length() == 0) {
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				continue;
-			}
 			if (!checkForValidAcctNo(accountNumber)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
@@ -608,7 +634,7 @@ public class BankService {
 	public boolean performDeposit(String accountNumber, Double depositAmount) {
 		try {
 			Optional<Integer> resultOpt = bankDao.depositFunds(accountNumber, depositAmount);
-			if (!resultOpt.isPresent()) {
+			if (!resultOpt.isPresent() || resultOpt.get() == -1) {
 				throw new NoSuchElementException();
 			}
 		} catch (NoSuchElementException e) {
@@ -652,11 +678,6 @@ public class BankService {
 			System.out
 					.print("Provide the account number you wish to withdraw funds from and then press the enter key: ");
 			String accountNumber = UI.nextLine();
-			if (accountNumber.length() == 0) {
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				continue;
-			}
 			if (!checkForValidAcctNo(accountNumber)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
@@ -688,7 +709,7 @@ public class BankService {
 	public int performWithdraw(String accountNumber, Double withdrawAmount) {
 		try {
 			Optional<Integer> resultOpt = bankDao.withdrawFunds(accountNumber, withdrawAmount);
-			if (!resultOpt.isPresent()) {
+			if (!resultOpt.isPresent() || resultOpt.get() == -2) {
 				throw new NoSuchElementException();
 			} else if (resultOpt.get() == -1) {
 				throw new OverDrawException();
@@ -740,7 +761,7 @@ public class BankService {
 	public int performTransfer(String sourceAccountNumber, String endAccountNumber, Double transferAmount) {
 		try {
 			Optional<Integer> resultOpt = bankDao.transferFunds(sourceAccountNumber, endAccountNumber, transferAmount);
-			if (!resultOpt.isPresent()) {
+			if (!resultOpt.isPresent() || resultOpt.get() == -2) {
 				throw new NoSuchElementException();
 			} else if (resultOpt.get() == -1) {
 				throw new OverDrawException();
@@ -965,12 +986,10 @@ public class BankService {
 		System.out.println("The pin number was updated successfully.  Press the enter key to exit the screen: ");
 		UI.nextLine();
 	}
-
+	
 	// Part of the view
-	public void adminUpdateUserInformation(Scanner UI, SuperUser admin) {
+	public void masterPinCheck(Scanner UI, SuperUser admin) {
 		while (true) {
-			System.out.println("You have select the option to change a member's profile information");
-			System.out.println("");
 			System.out.print("Confirm your identity as admin by typing in the master pin and then press the enter key: ");
 			String pinInput = UI.nextLine();
 			if (pinInput.compareTo(admin.getMasterPin()) != 0) {
@@ -980,10 +999,29 @@ public class BankService {
 			}
 			break;
 		}
+	}
+	
+	// Part of the view
+	public void adminUpdateUserInformation(Scanner UI, SuperUser admin) {
+		System.out.println("You have selected the option to change a member's profile information");
+		System.out.println("");
+		masterPinCheck(UI, admin);
 		System.out.println("");
 		System.out.println("Pin approved");
 		System.out.println("");
-		String userToUpdate = retrieveAUserNameFromList(UI);
+		BankMember member = null;
+		while (true) {
+			String userToUpdate = retrieveAUserNameFromList(UI);
+			member = getBankMember(userToUpdate);
+			if (member == null) {
+				System.out.println("The user name you searched was not found in our records");
+				System.out.println("");
+				System.out.print("Press the enter key to try another search: ");
+				UI.nextLine();
+				adminUpdateUserInformation(UI,admin);
+			}
+			break;
+		}
 		while (true) {
 			System.out.println("");
 			System.out.println("");
@@ -998,13 +1036,13 @@ public class BankService {
 			String selection = UI.nextLine();
 			switch (selection) {
 				case "1":
-					updateUserName(getBankMember(userToUpdate).get(), UI);
+					updateUserName(member, UI);
 					break;
 				case "2":
-					updatePassWord(getBankMember(userToUpdate).get(), UI);
+					updatePassWord(member, UI);
 					break;
 				case "3":
-					updatePinNumber(getBankMember(userToUpdate).get(), UI);
+					updatePinNumber(member, UI);
 					break;
 				case "4":
 					
@@ -1013,7 +1051,7 @@ public class BankService {
 					
 					break;
 				default:
-					break;
+					continue;
 			}
 			break;
 		}
@@ -1071,18 +1109,9 @@ public class BankService {
 	
 	// Part of the view
 	public void adminViewAllUsers(Scanner UI, SuperUser admin) {
-		while (true) {
-			System.out.println("You have chosen to view all registered users");
-			System.out.println("");
-			System.out.print("Confirm this action by entering the master pin here: ");
-			String pinInput = UI.nextLine();
-			if (pinInput.compareTo(admin.getMasterPin()) != 0) {
-				System.out.println("Invalid pin input");
-				System.out.print("Try again by pressing the enter key: ");
-				UI.nextLine();
-			}
-			break;
-		}
+		System.out.println("You have chosen to view all registered users");
+		System.out.println("");
+		masterPinCheck(UI, admin);
 		System.out.println("");
 		System.out.println("Pin approved");
 		System.out.println("");
@@ -1094,51 +1123,44 @@ public class BankService {
 		UI.nextLine();
 	}
 
-	// Part of the view (re-factor this to call the pre-existing testable method for
-	// removing an inactive bank member)
+	// Part of the view
 	public void adminRemoveUser(Scanner UI, SuperUser admin) {
-		System.out.print("Enter the user name of the profile to be removed: ");
-		String userName = UI.nextLine();
-		Optional<BankMember> memberOpt = bankDao.getBankMember(userName);
-		if (!memberOpt.isPresent()) {
+		System.out.println("You have selected the option to change a member's profile information");
+		System.out.println("");
+		masterPinCheck(UI, admin);
+		System.out.println("");
+		System.out.println("Pin approved");
+		System.out.println("");
+		String userToUpdate = retrieveAUserNameFromList(UI);
+		if (getBankMember(userToUpdate) == null) {
 			System.out.println("This user name is not in the database");
-			System.out.print("Press enter key to continue: ");
+			System.out.print("Press the enter key to try another search: ");
 			UI.nextLine();
-			return;
+			adminRemoveUser(UI, admin);
 		}
-		Optional<List<BankAccount>> baOpt = bankDao.getAMembersAccounts(memberOpt.get());
-		if (baOpt.isPresent()) {
+		if (!retrieveAMembersBankAccounts(getBankMember(userToUpdate)).isEmpty()) {
 			System.out.println("This user has existing accounts");
 			System.out.println("This user should not be removed from the database");
 			System.out.println("so that this user does not lose their funds");
-			System.out.print("Press enter key to continue: ");
+			System.out.print("Press the enter key to continue: ");
 			UI.nextLine();
 			return;
 		}
-		try {
-			if (bankDao.removeInactiveBankMember(memberOpt.get()).isPresent()) {
-				while (true) {
-					System.out.print("Confirm action by entering the master pin here: ");
-					String pinInput = UI.nextLine();
-					if (pinInput.compareTo(admin.getMasterPin()) != 0) {
-						System.out.println("Invalid pin input");
-						System.out.print("Try again by pressing the enter key: ");
-						UI.nextLine();
-					}
-					break;
-				}
-				System.out.println("");
-				System.out.println("Pin approved!");
-				System.out.println("");
-				System.out.println("User removed successfully");
-			} else {
-				throw new NoSuchElementException();
-			}
-		} catch (NoSuchElementException e) {
+		System.out.println("Removing user...");
+		System.out.println("");
+		if (!performMemberRemoval(getBankMember(userToUpdate))) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
 			System.out.println("The user profile could not be removed.");
 			System.out.print("Check SQL code for errors.");
+			System.out.println("");
+			System.out.print("Press the enter key to return to your portal: ");
+			UI.nextLine();
+			return;
 		}
+		System.out.println("User removed successfully");
+		System.out.println("");
+		System.out.print("Press the enter key to return to your portal: ");
+		UI.nextLine();
 	}
 }

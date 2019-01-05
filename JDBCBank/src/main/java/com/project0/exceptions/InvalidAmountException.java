@@ -1,8 +1,8 @@
 package com.project0.exceptions;
 
-public class NotANumberException extends RuntimeException {
+public class InvalidAmountException extends RuntimeException {
 
-	public NotANumberException() {
+	public InvalidAmountException() {
 		super();
 	}
 
