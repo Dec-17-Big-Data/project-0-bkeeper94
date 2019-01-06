@@ -58,6 +58,20 @@ public class BankMemberService {
 		}
 	}
 	
+	// Checks to make sure the input for first name and last name consist only of letters 
+	// (Unit test this method)
+	public boolean nameInputChecker(String name) {
+		if (name.length() == 0) {
+			return false;
+		}
+		for (int i = 0; i < name.length(); i++) {
+			if (name.substring(i, i + 1).matches("[^A-Za-z ]")) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	// Checks for valid pin input (Unit test this method)
 	public boolean pinInputAuthentication(String pinInput) {
 		try {
@@ -108,7 +122,7 @@ public class BankMemberService {
 				System.out.println("");
 				System.out.print("Type in your first name and then press the enter key: ");
 				firstName = UI.nextLine();
-				if (firstName.length() == 0) {
+				if (!nameInputChecker(firstName)) {
 					for (int i = 0; i < 50; ++i)
 						System.out.println();
 					continue;
@@ -118,7 +132,7 @@ public class BankMemberService {
 			while (true) {
 				System.out.print("Type in your last name and then press the enter key: ");
 				lastName = UI.nextLine();
-				if (lastName.length() == 0) {
+				if (!nameInputChecker(lastName)) {
 					for (int i = 0; i < 50; ++i)
 						System.out.println();
 					continue;
@@ -425,7 +439,7 @@ public class BankMemberService {
 	public boolean performPinUpdate(BankMember member, String newPinNumber) {
 		try {
 			Optional<Integer> resultOpt = bankMemberDao.updatePinNumber(member, newPinNumber);
-			if (resultOpt.isPresent()) {
+			if (!resultOpt.isPresent()) {
 				throw new NoSuchElementException();
 			}
 		} catch (NoSuchElementException e) {
@@ -486,7 +500,88 @@ public class BankMemberService {
 		UI.nextLine();
 	}
 	
+	// Performs the update of the user's first name (Unit test this method)
+	public boolean performFirstNameUpdate(BankMember member, String newFirstName) {
+		try {
+			Optional<Integer> resultOpt = bankMemberDao.updateFirstName(member, newFirstName);
+			if (!resultOpt.isPresent()) {
+				throw new NoSuchElementException();
+			}
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+		return true;
+	}
 	
+	// Part of the view
+	public void updateFirstName(BankMember member, Scanner UI) {
+		System.out.println("");
+		System.out.println("You have selected to update a user's first name");
+		System.out.println("");
+		String newFirstName = "";
+		while (true) {
+			System.out.print("Enter the new first name and then press the enter key: ");
+			newFirstName = UI.nextLine();
+			if (!nameInputChecker(newFirstName)) {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
+				continue;
+			}
+			break;
+		}
+		System.out.println("Updating first name...");
+		System.out.println("");
+		if (!performFirstNameUpdate(member, newFirstName)) {
+			System.out.println("The first name could not be updated due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return;
+		}
+		System.out.println("Successful update.  Press the enter key to exit the screen: ");
+		UI.nextLine();
+	}
+	
+	// Performs the update of the user's last name (Unit test this method)
+	public boolean performLastNameUpdate(BankMember member, String newLastName) {
+		try {
+			Optional<Integer> resultOpt = bankMemberDao.updateLastName(member, newLastName);
+			if (!resultOpt.isPresent()) {
+				throw new NoSuchElementException();
+			}
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	// Part of the view
+	public void updateLastName(BankMember member, Scanner UI) {
+		System.out.println("");
+		System.out.println("You have selected to update a user's last name");
+		System.out.println("");
+		String newLastName = "";
+		while (true) {
+			System.out.print("Enter the new last name and then press the enter key: ");
+			System.out.println("");
+			newLastName = UI.nextLine();
+			if (!nameInputChecker(newLastName)) {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
+				continue;
+			}
+			break;
+		}
+		System.out.println("Updating last name...");
+		System.out.println("");
+		if (!performLastNameUpdate(member, newLastName)) {
+			System.out.println("The last name could not be updated due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return;
+		}
+		System.out.println("Successful update.  Press the enter key to exit the screen: ");
+		UI.nextLine();
+	}
 	
 	// Part of the view
 	public void masterPinCheck(Scanner UI, SuperUser admin) {
@@ -546,10 +641,10 @@ public class BankMemberService {
 					updatePinNumber(member, UI);
 					break;
 				case "4":
-					
+					updateFirstName(member, UI);
 					break;
 				case "5":
-					
+					updateLastName(member, UI);
 					break;
 				default:
 					continue;
