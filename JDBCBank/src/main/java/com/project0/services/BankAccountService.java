@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class BankAccountService {
-	
+
 	private static BankAccountService bankAccountService;
 	final static BankAccountDao bankAccountDao = BankAccountOracle.getDao();
 
@@ -25,7 +25,7 @@ public class BankAccountService {
 
 		return bankAccountService;
 	}
-	
+
 	// Getter for entries in the bankaccounts SQL table (Unit test this method)
 	public BankAccount getBankAccount(String accountNumber) {
 		try {
@@ -36,10 +36,10 @@ public class BankAccountService {
 				throw new NoSuchElementException();
 			}
 		} catch (NoSuchElementException e) {
-				return null;
+			return null;
 		}
 	}
-	
+
 	// Checks for valid pin input (Unit test this method)
 	public boolean pinInputAuthentication(String pinInput) {
 		try {
@@ -56,7 +56,7 @@ public class BankAccountService {
 			return false;
 		}
 	}
-	
+
 	// Creates a list of a bank member's accounts (Unit test this method)
 	public List<BankAccount> retrieveAMembersBankAccounts(BankMember member) {
 		try {
@@ -88,10 +88,28 @@ public class BankAccountService {
 		System.out.println("");
 	}
 	
+	// Checks that the account type the user puts in is one of the two accepted words (Unit test this method)
+	public boolean accountTypeChecker(String accountTypeInput) {
+		try {
+			switch (accountTypeInput) {
+			case "checking":
+			case "savings":
+				return true;
+			default:
+				throw new InvalidAccountTypeException();
+			}
+		} catch (InvalidAccountTypeException e) {
+			return false;
+		}
+	}
+	
 	// Checks that the user typed in a properly formatted dollar amount (Unit test
 	// this method)
 	public boolean amountInputChecker(String value) {
 		try {
+			if (value.length() == 0) {
+				throw new InvalidAmountException();
+			}
 			for (int i = 0; i < value.length(); i++) {
 				if (value.substring(i, i + 1).matches("[^0-9,$.]")) {
 					throw new InvalidAmountException();
@@ -103,7 +121,8 @@ public class BankAccountService {
 		return true;
 	}
 
-	//Changes the amount input by the user from a string to a double (Unit Test this method)
+	// Changes the amount input by the user from a string to a double (Unit Test
+	// this method)
 	public Double amountInputAsNumber(String amount) {
 		amount = amount.replaceAll("[$,]", "");
 		return Math.round(100.0 * Double.valueOf(amount)) / 100.0;
@@ -121,31 +140,26 @@ public class BankAccountService {
 			return false;
 		}
 	}
-	
+
 	// Part of the view
 	public boolean openNewAccount(BankMember member, Scanner UI) {
 		System.out.println("You will now open an account with the Bank of OOPs");
 		System.out.println("");
 		System.out.println("First, specify the type of account you wish to open");
-		String accountType = "";
+		String accountTypeInput = "";
 		while (true) {
 			System.out.println("We offer checking accounts and savings accounts");
 			System.out.print("Type in either 'checking' or 'savings' and then press the enter key: ");
-			accountType = UI.nextLine();
-			if (accountType.length() == 0) {
+			accountTypeInput = UI.nextLine();
+			if (!accountTypeChecker(accountTypeInput)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
+				System.out.println("Invalid account type");
+				System.out.println("");
+				System.out.println("Acceptable account types are checking and savings");
+				System.out.print("Press the enter key to try again: ");
+				UI.nextLine();
 				continue;
-			}
-			switch (accountType) {
-			case "checking":
-			case "savings":
-				break;
-			default:
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				continue;
-
 			}
 			break;
 		}
@@ -174,7 +188,7 @@ public class BankAccountService {
 		System.out.println("Creating account...");
 		System.out.println("");
 		Double valueAsNum = amountInputAsNumber(value);
-		if (!addAccount(member, accountType, valueAsNum)) {
+		if (!addAccount(member, accountTypeInput, valueAsNum)) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
 			System.out.println("We were unable to open a new account due to an unexpected error.");
@@ -206,7 +220,7 @@ public class BankAccountService {
 		}
 		return true;
 	}
-	
+
 	// Account number mismatch checker (Unit test this method)
 	public boolean accountNumberMismatchCheck(String accountNumber) {
 		try {
@@ -427,7 +441,7 @@ public class BankAccountService {
 	public boolean performDeposit(String accountNumber, Double depositAmount) {
 		try {
 			Optional<Integer> resultOpt = bankAccountDao.depositFunds(accountNumber, depositAmount);
-			if (!resultOpt.isPresent()) {
+			if (!resultOpt.isPresent() || resultOpt.get() == -1) {
 				throw new NoSuchElementException();
 			}
 		} catch (NoSuchElementException e) {
@@ -507,7 +521,7 @@ public class BankAccountService {
 	public int performWithdraw(String accountNumber, Double withdrawAmount) {
 		try {
 			Optional<Integer> resultOpt = bankAccountDao.withdrawFunds(accountNumber, withdrawAmount);
-			if (!resultOpt.isPresent()) {
+			if (!resultOpt.isPresent() || resultOpt.get() == -2) {
 				throw new NoSuchElementException();
 			} else if (resultOpt.get() == -1) {
 				throw new OverDrawException();
@@ -558,8 +572,9 @@ public class BankAccountService {
 	// Perform the transfer action and checks for overdraw (Unit test this method)
 	public int performTransfer(String sourceAccountNumber, String endAccountNumber, Double transferAmount) {
 		try {
-			Optional<Integer> resultOpt = bankAccountDao.transferFunds(sourceAccountNumber, endAccountNumber, transferAmount);
-			if (!resultOpt.isPresent()) {
+			Optional<Integer> resultOpt = bankAccountDao.transferFunds(sourceAccountNumber, endAccountNumber,
+					transferAmount);
+			if (!resultOpt.isPresent() || resultOpt.get() == -2) {
 				throw new NoSuchElementException();
 			} else if (resultOpt.get() == -1) {
 				throw new OverDrawException();

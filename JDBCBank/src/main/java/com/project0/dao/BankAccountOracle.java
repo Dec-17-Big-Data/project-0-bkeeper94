@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class BankAccountOracle implements BankAccountDao {
-	
+
 	private static BankAccountOracle bankAccountOracle;
 
 	private static final Logger log = LogManager.getLogger(BankAccountOracle.class);
@@ -57,8 +57,7 @@ public class BankAccountOracle implements BankAccountDao {
 			}
 
 			if (ba == null) {
-				log.traceExit(Optional.of(new BankAccount()));
-				return Optional.empty();
+				return log.traceExit(Optional.empty());
 			}
 
 			return log.traceExit(Optional.of(ba));
@@ -71,7 +70,7 @@ public class BankAccountOracle implements BankAccountDao {
 		return Optional.empty();
 
 	}
-	
+
 	@Override
 	public Optional<List<BankAccount>> getAMembersAccounts(BankMember member) {
 		log.traceEntry("getAMembersAccounts: " + "Parameter= {}", member.toString());
@@ -111,7 +110,7 @@ public class BankAccountOracle implements BankAccountDao {
 		return Optional.empty();
 
 	}
-	
+
 	@Override
 	public Optional<Integer> openNewBankAccount(BankMember member, String accountType, Double amount) {
 		log.traceEntry("openNewBankAccount: " + "Parameter= {}", member.toString());
@@ -147,12 +146,12 @@ public class BankAccountOracle implements BankAccountDao {
 			cb.registerOutParameter(5, java.sql.Types.INTEGER);
 			cb.execute();
 			int result = cb.getInt(5);
-			
+
 			// Case when account is not opened because the user id is not in the database
 			if (result == -1) {
 				return log.traceExit(Optional.empty());
 			}
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -183,11 +182,11 @@ public class BankAccountOracle implements BankAccountDao {
 			cb.registerOutParameter(2, java.sql.Types.INTEGER);
 			cb.execute();
 			int result = cb.getInt(2);
-			
+
 			if (result == -1) {
 				return log.traceExit(Optional.empty());
 			}
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -198,7 +197,7 @@ public class BankAccountOracle implements BankAccountDao {
 		return Optional.empty();
 
 	}
-	
+
 	@Override
 	public Optional<Integer> depositFunds(String accountNumber, Double amount) {
 		log.traceEntry("depositFunds: " + "Parameter= {}", accountNumber);
@@ -219,7 +218,7 @@ public class BankAccountOracle implements BankAccountDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -295,5 +294,5 @@ public class BankAccountOracle implements BankAccountDao {
 		log.traceExit(Optional.empty());
 		return Optional.empty();
 	}
-	
+
 }

@@ -18,7 +18,7 @@ public class SuperUser implements Serializable {
 	private String masterID;
 	private String masterPassWord;
 	private String masterPin;
-	
+
 	private static Logger log = LogManager.getLogger(SuperUser.class);
 
 	private static SuperUser adminInstance = null;
@@ -56,9 +56,11 @@ public class SuperUser implements Serializable {
 		return masterPin;
 	}
 
-	// No setters for the attributes of SuperUser as they are never modified after assignment
-	// To change these values, change them in the admin.properties file in src/main/resources
-	
+	// No setters for the attributes of SuperUser as they are never modified after
+	// assignment
+	// To change these values, change them in the admin.properties file in
+	// src/main/resources
+
 	@Override
 	public String toString() {
 		return "SuperUser [masterID=" + masterID + ", masterPassWord=" + masterPassWord + ", masterPin=" + masterPin

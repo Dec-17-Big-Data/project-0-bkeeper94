@@ -57,8 +57,8 @@ public class BankMemberOracle implements BankMemberDao {
 			}
 
 			if (member == null) {
-				log.traceExit(Optional.of(new BankMember()));
-				return Optional.of(new BankMember());
+				log.traceExit(Optional.empty());
+				return Optional.empty();
 			}
 
 			return log.traceExit(Optional.of(member));
@@ -71,7 +71,7 @@ public class BankMemberOracle implements BankMemberDao {
 		return Optional.empty();
 
 	}
-	
+
 	public Optional<List<BankMember>> getAllMembers() {
 		log.traceEntry("getAllMembers: ");
 
@@ -121,19 +121,14 @@ public class BankMemberOracle implements BankMemberDao {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, member.getUserID());
 			ResultSet rs = ps.executeQuery();
-
+			
 			List<BankAccount> bl = new ArrayList<BankAccount>();
-
+			
 			while (rs.next()) {
 				bl.add(new BankAccount(rs.getInt("account_id"), rs.getString("account_type"),
 						rs.getString("account_no"), rs.getInt("member_id"), rs.getDouble("balance")));
 			}
-
-			if (bl.isEmpty()) {
-				log.traceExit(Optional.of(new ArrayList<BankAccount>()));
-				return Optional.of(new ArrayList<BankAccount>());
-			}
-
+			
 			return log.traceExit(Optional.of(bl));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -184,17 +179,17 @@ public class BankMemberOracle implements BankMemberDao {
 		return Optional.empty();
 
 	}
-	
+
 	@Override
 	public Optional<Integer> removeInactiveBankMember(BankMember member) {
+		// Catch case when bank member has already been removed but this method is called anyway
+		if (member == null) {
+			return log.traceExit(Optional.of(-1));
+		}
+		
 		log.traceEntry("removeInactiveBankMember: " + "Parameter= {}", member.toString());
 
 		Connection con = ConnectionUtil.getConnection();
-
-		if (!getBankMember(member.getUserName()).isPresent()) {
-			log.traceExit(Optional.empty());
-			return Optional.of(-1);
-		}
 
 		if (con == null) {
 			log.traceExit(Optional.empty());
@@ -208,7 +203,7 @@ public class BankMemberOracle implements BankMemberDao {
 			cb.registerOutParameter(2, java.sql.Types.INTEGER);
 			cb.execute();
 			int result = cb.getInt(2);
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -218,7 +213,7 @@ public class BankMemberOracle implements BankMemberDao {
 		log.traceExit(Optional.empty());
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public Optional<Integer> updateUserName(BankMember member, String newUserName) {
 		log.traceEntry("updateUserName: " + "Parameter= {}", member.toString());
@@ -301,7 +296,7 @@ public class BankMemberOracle implements BankMemberDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -332,7 +327,7 @@ public class BankMemberOracle implements BankMemberDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);
@@ -363,7 +358,7 @@ public class BankMemberOracle implements BankMemberDao {
 			cb.registerOutParameter(3, java.sql.Types.INTEGER);
 			cb.execute();
 			Integer result = cb.getInt(3);
-			
+
 			return log.traceExit(Optional.of(result));
 		} catch (SQLException e) {
 			log.catching(e);

@@ -13,7 +13,7 @@ public class BankAccount implements Serializable {
 	private String accountNo;
 	private Integer memberID;
 	private Double balance;
-	
+
 	public BankAccount() {
 		super();
 	}

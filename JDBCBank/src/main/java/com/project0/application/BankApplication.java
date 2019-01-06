@@ -33,7 +33,7 @@ public abstract class BankApplication {
 			}
 		}
 	}
-	
+
 	// Profile Log-In Screen
 	private static String[] loginScreen(BankMemberService bms, Scanner UI, SuperUser admin) {
 		// Instantiate the array to be returned by this method
@@ -95,9 +95,10 @@ public abstract class BankApplication {
 	}
 
 	// User Portal
-	private static String userPortalOverviewScreen(BankMemberService bms, BankAccountService bas, 
-			Scanner UI, String userName) {
-		// Retrieve the instance of BankAccount created for the user identified by userName
+	private static String userPortalOverviewScreen(BankMemberService bms, BankAccountService bas, Scanner UI,
+			String userName) {
+		// Retrieve the instance of BankAccount created for the user identified by
+		// userName
 		BankMember member = bms.getBankMember(userName);
 		List<BankAccount> baList = bms.retrieveAMembersBankAccounts(member);
 		if (baList == null || member == null) {

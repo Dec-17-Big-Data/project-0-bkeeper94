@@ -26,7 +26,7 @@ public class BankMemberService {
 
 		return bankService;
 	}
-	
+
 	// Getter for entries in the bankmembers SQL table (Unit test this method)
 	public BankMember getBankMember(String userName) {
 		try {
@@ -41,7 +41,7 @@ public class BankMemberService {
 		}
 
 	}
-	
+
 	// Helper method for application's login screen (Unit test this method)
 	public boolean loginAuthentication(String userNameInput, String passWordInput) {
 		try {
@@ -57,21 +57,26 @@ public class BankMemberService {
 			return false;
 		}
 	}
-	
-	// Checks to make sure the input for first name and last name consist only of letters 
+
+	// Checks to make sure the input for first name and last name consist only of
+	// letters
 	// (Unit test this method)
 	public boolean nameInputChecker(String name) {
-		if (name.length() == 0) {
+		try {
+			if (name.length() == 0) {
+				throw new InvalidNameInputException();
+			}
+			for (int i = 0; i < name.length(); i++) {
+				if (name.substring(i, i + 1).matches("[^-A-Za-z ]")) {
+					throw new InvalidNameInputException();
+				}
+			}
+			return true;
+		} catch (InvalidNameInputException e) {
 			return false;
 		}
-		for (int i = 0; i < name.length(); i++) {
-			if (name.substring(i, i + 1).matches("[^A-Za-z ]")) {
-				return false;
-			}
-		}
-		return true;
 	}
-	
+
 	// Checks for valid pin input (Unit test this method)
 	public boolean pinInputAuthentication(String pinInput) {
 		try {
@@ -94,7 +99,8 @@ public class BankMemberService {
 	public int addNewUser(String firstName, String lastName, String userNameInput, String passWordInput,
 			String pinInput) {
 		try {
-			Optional<Integer> result = bankMemberDao.addNewUser(firstName, lastName, userNameInput, passWordInput, pinInput);
+			Optional<Integer> result = bankMemberDao.addNewUser(firstName, lastName, userNameInput, passWordInput,
+					pinInput);
 			if (!result.isPresent()) {
 				throw new NoSuchElementException();
 			} else if (result.get() == -1) {
@@ -190,8 +196,8 @@ public class BankMemberService {
 			System.out.println("");
 			System.out.println("Here is all of your profile information: ");
 			System.out.println("");
-			System.out.println(firstName + ", " + lastName + ", " + userNameInput + ", " + 
-							passWordInput + ", " + pinInput);
+			System.out.println(
+					firstName + ", " + lastName + ", " + userNameInput + ", " + passWordInput + ", " + pinInput);
 			System.out.println("");
 			System.out.println("Confirm all of the above information by typing in 'yes'");
 			System.out.println("OR if you would like to retry creating your profile, type in 'no'");
@@ -234,7 +240,7 @@ public class BankMemberService {
 			}
 		}
 	}
-	
+
 	// Creates a list of a bank member's accounts (Unit test this method)
 	public List<BankAccount> retrieveAMembersBankAccounts(BankMember member) {
 		try {
@@ -264,7 +270,7 @@ public class BankMemberService {
 		UI.nextLine();
 		System.out.println("");
 	}
-	
+
 	// Performs removal of inactive bank member (Unit test this method)
 	public boolean performMemberRemoval(BankMember member) {
 		try {
@@ -310,7 +316,7 @@ public class BankMemberService {
 			return true;
 		}
 	}
-	
+
 	// Performs the user name update (Unit test this method)
 	public int performUsernameUpdate(BankMember member, String newUserName) {
 		try {
@@ -318,14 +324,17 @@ public class BankMemberService {
 			if (!resultOpt.isPresent()) {
 				throw new NoSuchElementException();
 			} else if (resultOpt.get() == -1) {
-				return 0;
+				throw new DuplicateUserNameException();
 			}
+		} catch (DuplicateUserNameException e) {
+			return 0;
 		} catch (NoSuchElementException e) {
 			return -1;
 		}
 		return 1;
 	}
 
+	// Part of the view
 	public boolean updateUserName(BankMember member, Scanner UI) {
 		while (true) {
 			System.out.println("");
@@ -422,7 +431,7 @@ public class BankMemberService {
 			return true;
 		}
 	}
-	
+
 	// Check for pin number mismatch (Unit test this method)
 	public boolean pinMismatchCheck(BankMember member, String pinNumber) {
 		try {
@@ -434,7 +443,7 @@ public class BankMemberService {
 		}
 		return true;
 	}
-	
+
 	// Performs the pin number update (Unit test this method)
 	public boolean performPinUpdate(BankMember member, String newPinNumber) {
 		try {
@@ -499,7 +508,7 @@ public class BankMemberService {
 		System.out.println("The pin number was updated successfully.  Press the enter key to exit the screen: ");
 		UI.nextLine();
 	}
-	
+
 	// Performs the update of the user's first name (Unit test this method)
 	public boolean performFirstNameUpdate(BankMember member, String newFirstName) {
 		try {
@@ -512,7 +521,7 @@ public class BankMemberService {
 		}
 		return true;
 	}
-	
+
 	// Part of the view
 	public void updateFirstName(BankMember member, Scanner UI) {
 		System.out.println("");
@@ -540,7 +549,7 @@ public class BankMemberService {
 		System.out.println("Successful update.  Press the enter key to exit the screen: ");
 		UI.nextLine();
 	}
-	
+
 	// Performs the update of the user's last name (Unit test this method)
 	public boolean performLastNameUpdate(BankMember member, String newLastName) {
 		try {
@@ -553,7 +562,7 @@ public class BankMemberService {
 		}
 		return true;
 	}
-	
+
 	// Part of the view
 	public void updateLastName(BankMember member, Scanner UI) {
 		System.out.println("");
@@ -582,11 +591,12 @@ public class BankMemberService {
 		System.out.println("Successful update.  Press the enter key to exit the screen: ");
 		UI.nextLine();
 	}
-	
+
 	// Part of the view
 	public void masterPinCheck(Scanner UI, SuperUser admin) {
 		while (true) {
-			System.out.print("Confirm your identity as admin by typing in the master pin and then press the enter key: ");
+			System.out
+					.print("Confirm your identity as admin by typing in the master pin and then press the enter key: ");
 			String pinInput = UI.nextLine();
 			if (pinInput.compareTo(admin.getMasterPin()) != 0) {
 				System.out.println("Invalid pin input");
@@ -596,7 +606,7 @@ public class BankMemberService {
 			break;
 		}
 	}
-	
+
 	// Part of the view
 	public void adminUpdateUserInformation(Scanner UI, SuperUser admin) {
 		System.out.println("You have selected the option to change a member's profile information");
@@ -614,7 +624,7 @@ public class BankMemberService {
 				System.out.println("");
 				System.out.print("Press the enter key to try another search: ");
 				UI.nextLine();
-				adminUpdateUserInformation(UI,admin);
+				adminUpdateUserInformation(UI, admin);
 			}
 			break;
 		}
@@ -631,23 +641,23 @@ public class BankMemberService {
 					+ "press the enter key (for example, type in '1' if you want to change a user name): ");
 			String selection = UI.nextLine();
 			switch (selection) {
-				case "1":
-					updateUserName(member, UI);
-					break;
-				case "2":
-					updatePassWord(member, UI);
-					break;
-				case "3":
-					updatePinNumber(member, UI);
-					break;
-				case "4":
-					updateFirstName(member, UI);
-					break;
-				case "5":
-					updateLastName(member, UI);
-					break;
-				default:
-					continue;
+			case "1":
+				updateUserName(member, UI);
+				break;
+			case "2":
+				updatePassWord(member, UI);
+				break;
+			case "3":
+				updatePinNumber(member, UI);
+				break;
+			case "4":
+				updateFirstName(member, UI);
+				break;
+			case "5":
+				updateLastName(member, UI);
+				break;
+			default:
+				continue;
 			}
 			break;
 		}
@@ -665,12 +675,11 @@ public class BankMemberService {
 		}
 		return bmOpt.get();
 	}
-	
+
 	// Part of the view
 	public String retrieveAUserNameFromList(Scanner UI) {
 		List<String> usersList = printListOfAllUsers(UI);
-		System.out.print("Type in the user name of the profile you wish "
-				+ "to update and then press the enter key: ");
+		System.out.print("Type in the user name of the profile you wish " + "to update and then press the enter key: ");
 		String input = UI.nextLine();
 		if (usersList.contains(input)) {
 			int loc = usersList.indexOf(input);
@@ -679,7 +688,7 @@ public class BankMemberService {
 			return "";
 		}
 	}
-	
+
 	// Part of the view
 	public List<String> printListOfAllUsers(Scanner UI) {
 		List<BankMember> bm = showRegisteredUsers();
@@ -702,7 +711,7 @@ public class BankMemberService {
 		}
 		return usersList;
 	}
-	
+
 	// Part of the view
 	public void adminViewAllUsers(Scanner UI, SuperUser admin) {
 		System.out.println("You have chosen to view all registered users");
@@ -759,5 +768,5 @@ public class BankMemberService {
 		System.out.print("Press the enter key to return to your portal: ");
 		UI.nextLine();
 	}
-	
+
 }

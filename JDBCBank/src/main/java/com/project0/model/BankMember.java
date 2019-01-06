@@ -2,26 +2,27 @@ package com.project0.model;
 
 import java.io.Serializable;
 
-public class BankMember implements Serializable{
+public class BankMember implements Serializable {
 	// Bean that represents a record in the "bankmembers" SQL table
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -886643837728319518L;
-	
+
 	private Integer userID;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String passWord;
 	private String pinNumber;
-	
+
 	public BankMember() {
-		
+
 	}
 
-	public BankMember(Integer userID, String userName, String firstName, String lastName, String passWord, String pinNumber) {
+	public BankMember(Integer userID, String userName, String firstName, String lastName, String passWord,
+			String pinNumber) {
 		this.userID = userID;
 		this.userName = userName;
 		this.firstName = firstName;
@@ -33,9 +34,9 @@ public class BankMember implements Serializable{
 	public Integer getUserID() {
 		return userID;
 	}
-	
+
 	// No setter for userID as it is the primary key for the "bankmembers" SQL table
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -43,7 +44,7 @@ public class BankMember implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -67,7 +68,7 @@ public class BankMember implements Serializable{
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
-	
+
 	public String getPinNumber() {
 		return pinNumber;
 	}
@@ -75,7 +76,7 @@ public class BankMember implements Serializable{
 	public void setPinNumber(String pinNumber) {
 		this.pinNumber = pinNumber;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "BankMember [userID=" + userID + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
