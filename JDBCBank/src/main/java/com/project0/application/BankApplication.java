@@ -95,10 +95,9 @@ public abstract class BankApplication {
 	}
 
 	// User Portal
-	private static String userPortalOverviewScreen(BankMemberService bms, BankAccountService bas, Scanner UI,
-			String userName) {
-		// Retrieve the instance of BankAccount created for the user identified by
-		// userName
+	private static String userPortalOverviewScreen(BankMemberService bms, BankAccountService bas, TransactionService ts,
+													Scanner UI, String userName) {
+		// Retrieve the instance of BankAccount created for the user identified by userName
 		BankMember member = bms.getBankMember(userName);
 		List<BankAccount> baList = bms.retrieveAMembersBankAccounts(member);
 		if (baList == null || member == null) {
@@ -139,7 +138,7 @@ public abstract class BankApplication {
 					} else {
 						for (int i = 0; i < 50; ++i)
 							System.out.println();
-						return userPortalOverviewScreen(bms, bas, UI, userName);
+						return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 					}
 				} else {
 					for (int i = 0; i < 50; ++i)
@@ -149,7 +148,7 @@ public abstract class BankApplication {
 			}
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
-			return userPortalOverviewScreen(bms, bas, UI, userName);
+			return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 		}
 		bms.printAMembersBankAccounts(baList, UI);
 		// Handle case when all of the accounts on a user's portal show $0 in funds
@@ -186,6 +185,7 @@ public abstract class BankApplication {
 		System.out.println("3: Deposit funds into an existing account");
 		System.out.println("4: Withdraw funds from an existing account");
 		System.out.println("5: Transfer funds to another one of your accounts");
+		System.out.println("6: View your transaction history");
 		System.out.println(
 				"To logout, simply press the enter key when prompted to make a selection from the above options");
 		System.out.println("");
@@ -201,7 +201,7 @@ public abstract class BankApplication {
 			if (bas.openNewAccount(member, UI)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
 				break;
 			}
@@ -209,31 +209,39 @@ public abstract class BankApplication {
 			if (bas.closeEmptyBankAccount(member, UI)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
 				break;
 			}
 		case "3":
-			if (bas.deposit(member, UI)) {
+			if (bas.deposit(ts, member, UI)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
 				break;
 			}
 		case "4":
-			if (bas.withdraw(member, UI)) {
+			if (bas.withdraw(ts, member, UI)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
 				break;
 			}
 		case "5":
-			if (bas.transferFunds(member, UI)) {
+			if (bas.transferFunds(ts, member, UI)) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
+			} else {
+				break;
+			}
+		case "6":
+			if (ts.getAMembersTransactions(member, UI)) {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
 				break;
 			}
@@ -252,7 +260,7 @@ public abstract class BankApplication {
 			answer = UI.nextLine();
 			switch (answer) {
 			case "stay":
-				return userPortalOverviewScreen(bms, bas, UI, userName);
+				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			case "leave":
 				return "logout";
 			case "exit":
@@ -329,6 +337,7 @@ public abstract class BankApplication {
 		SuperUser admin = SuperUser.getAdmin();
 		BankMemberService bms = BankMemberService.getService();
 		BankAccountService bas = BankAccountService.getService();
+		TransactionService ts = TransactionService.getService();
 		Scanner UI = new Scanner(System.in);
 		while (true) {
 			String resultOfStart = startScreen(UI);
@@ -376,7 +385,7 @@ public abstract class BankApplication {
 				UI.close();
 				return;
 			}
-			String s = userPortalOverviewScreen(bms, bas, UI, results[0]);
+			String s = userPortalOverviewScreen(bms, bas, ts, UI, results[0]);
 			if (s.compareToIgnoreCase("exit") == 0) {
 				System.out.println("");
 				System.out.println("");

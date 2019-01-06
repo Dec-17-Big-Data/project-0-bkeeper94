@@ -451,7 +451,7 @@ public class BankAccountService {
 	}
 
 	// Part of the view
-	public boolean deposit(BankMember member, Scanner UI) {
+	public boolean deposit(TransactionService ts, BankMember member, Scanner UI) {
 		System.out.println("");
 		System.out.println("You have selected to deposit funds into an account.");
 		System.out.println("");
@@ -462,6 +462,14 @@ public class BankAccountService {
 		System.out.println("Depositing funds...");
 		System.out.println("");
 		Double depositAsNum = amountInputAsNumber(depositAmount);
+		if (!ts.addNewTransaction(member, accountNumber, accountNumber, depositAsNum, "deposit")) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		if (!performDeposit(accountNumber, depositAsNum)) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
@@ -535,7 +543,7 @@ public class BankAccountService {
 	}
 
 	// Part of the view
-	public boolean withdraw(BankMember member, Scanner UI) {
+	public boolean withdraw(TransactionService ts, BankMember member, Scanner UI) {
 		System.out.println("");
 		System.out.println("You have selected to withdraw funds from an account.");
 		System.out.println("");
@@ -546,6 +554,14 @@ public class BankAccountService {
 		System.out.println("Attempting to withdraw funds...");
 		System.out.println("");
 		Double withdrawAsNum = amountInputAsNumber(withdrawAmount);
+		if (!ts.addNewTransaction(member, accountNumber, accountNumber, withdrawAsNum, "withdraw")) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		if (performWithdraw(accountNumber, withdrawAsNum) == 0) {
 			System.out.println("Insufficient funds");
 			System.out.println("");
@@ -588,7 +604,7 @@ public class BankAccountService {
 	}
 
 	// Part of the view
-	public boolean transferFunds(BankMember member, Scanner UI) {
+	public boolean transferFunds(TransactionService ts, BankMember member, Scanner UI) {
 		System.out.println("");
 		System.out.println("You have selected to transfer funds from one of your accounts to another ");
 		System.out.println("");
@@ -600,6 +616,14 @@ public class BankAccountService {
 		System.out.println("Attempting to transfer funds...");
 		System.out.println("");
 		Double transferAsNum = amountInputAsNumber(transferAmount);
+		if (!ts.addNewTransaction(member, endAccountNumber, sourceAccountNumber, transferAsNum, "transfer")) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		if (performTransfer(sourceAccountNumber, endAccountNumber, transferAsNum) == 0) {
 			System.out.println("Insufficient funds");
 			System.out.println("");
