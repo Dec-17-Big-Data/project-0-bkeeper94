@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class InvalidAccountNumberException extends RuntimeException {
+public class InvalidAccountNumberException extends Exception {
 	
 	public InvalidAccountNumberException() {
 		super();

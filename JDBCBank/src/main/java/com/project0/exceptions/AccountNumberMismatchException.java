@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class AccountNumberMismatchException extends RuntimeException {
+public class AccountNumberMismatchException extends Exception {
 	
 	public AccountNumberMismatchException() {
 		super();

@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class InvalidAmountException extends RuntimeException {
+public class InvalidAmountException extends Exception {
 
 	public InvalidAmountException() {
 		super();

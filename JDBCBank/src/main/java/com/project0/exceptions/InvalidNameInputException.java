@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class InvalidNameInputException extends RuntimeException {
+public class InvalidNameInputException extends Exception {
 	public InvalidNameInputException() {
 		super();
 	}

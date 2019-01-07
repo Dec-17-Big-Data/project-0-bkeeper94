@@ -244,6 +244,9 @@ public class BankMemberService {
 	// Creates a list of a bank member's accounts (Unit test this method)
 	public List<BankAccount> retrieveAMembersBankAccounts(BankMember member) {
 		try {
+			if (member == null) {
+				return null;
+			}
 			Optional<List<BankAccount>> baListOpt = bankMemberDao.getAMembersAccounts(member);
 			if (!baListOpt.isPresent()) {
 				throw new NoSuchElementException();
@@ -258,10 +261,10 @@ public class BankMemberService {
 	public void printAMembersBankAccounts(List<BankAccount> baList, Scanner UI) {
 		System.out.println("Here are your current account(s) and their balance(s):");
 		System.out.println("");
-		System.out.println("Account Number" + "          " + "Account Type" + "          " + "Balance");
-		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Account Number" + "      " + "Account Type" + "        " + "Balance");
+		System.out.println("--------------------------------------------------------");
 		for (BankAccount ba : baList) {
-			System.out.println(ba.getAccountNo() + "          " + ba.getAccountType() + "          " + "$"
+			System.out.println(ba.getAccountNo() + "          " + ba.getAccountType() + "            " + "$"
 					+ String.format("%.2f", ba.getBalance()));
 			System.out.println("");
 		}
@@ -737,27 +740,41 @@ public class BankMemberService {
 		System.out.println("Pin approved");
 		System.out.println("");
 		String userToUpdate = retrieveAUserNameFromList(UI);
-		if (getBankMember(userToUpdate) == null) {
+		BankMember bm = getBankMember(userToUpdate);
+		if (bm == null) {
 			System.out.println("This user name is not in the database");
 			System.out.print("Press the enter key to try another search: ");
 			UI.nextLine();
 			adminRemoveUser(UI, admin);
 		}
-		if (!retrieveAMembersBankAccounts(getBankMember(userToUpdate)).isEmpty()) {
+		List<BankAccount> ba = retrieveAMembersBankAccounts(bm); 
+		if (ba == null) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("The user profile could not be removed.");
+			System.out.print("Check SQL code or the database connection.");
+			System.out.println("");
+			System.out.print("Press the enter key to return to your portal: ");
+			UI.nextLine();
+			return;
+		}
+		if (!ba.isEmpty()) {
 			System.out.println("This user has existing accounts");
+			System.out.println("");
 			System.out.println("This user should not be removed from the database");
 			System.out.println("so that this user does not lose their funds");
+			System.out.println("");
 			System.out.print("Press the enter key to continue: ");
 			UI.nextLine();
 			return;
 		}
 		System.out.println("Removing user...");
 		System.out.println("");
-		if (!performMemberRemoval(getBankMember(userToUpdate))) {
+		if (!performMemberRemoval(bm)) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
 			System.out.println("The user profile could not be removed.");
-			System.out.print("Check SQL code for errors.");
+			System.out.print("Check SQL code or the database connection.");
 			System.out.println("");
 			System.out.print("Press the enter key to return to your portal: ");
 			UI.nextLine();

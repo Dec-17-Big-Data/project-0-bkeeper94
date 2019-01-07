@@ -52,8 +52,8 @@ public class TransactionOracle implements TransactionDao {
 			List<Transaction> ta = new ArrayList<Transaction>();
 
 			while (rs.next()) {
-				ta.add(new Transaction(rs.getInt("transaction_id"), rs.getString("source_account_id"), 
-						rs.getString("end_account_id"), rs.getInt("member_id"), rs.getString("transaction_type"),
+				ta.add(new Transaction(rs.getInt("transaction_id"), rs.getString("source_account_no"), 
+						rs.getString("end_account_no"), rs.getInt("member_id"), rs.getString("transaction_type"),
 						rs.getDouble("transaction_amount"), rs.getTimestamp("transaction_time")));
 			}
 

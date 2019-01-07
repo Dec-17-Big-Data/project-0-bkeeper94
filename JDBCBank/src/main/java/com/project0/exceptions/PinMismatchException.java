@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class PinMismatchException extends RuntimeException {
+public class PinMismatchException extends Exception {
 	
 	public PinMismatchException() {
 		super();

@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class LoginMismatchException extends RuntimeException {
+public class LoginMismatchException extends Exception {
 
 	public LoginMismatchException() {
 		super();

@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class OverDrawException extends RuntimeException {
+public class OverDrawException extends Exception {
 
 	public OverDrawException() {
 		super();

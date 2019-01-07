@@ -8,17 +8,17 @@ import com.project0.services.*;
 
 public abstract class BankApplication {
 
-	// This application assumes that the user will be able to use
-	// the enter key to navigate through each selection
+	// A user of this application will use the enter key to navigate through each selection
 
 	// Welcome Screen
 	private static String startScreen(Scanner UI) {
 		String s = "";
 		while (true) {
-			System.out.println("Welcome to the Bank Of OOPs");
+			System.out.println("Welcome to the Bank Of Object Oriented Programmers (OOPs)");
 			System.out.println("");
 			System.out.println("");
 			System.out.println("Do you have an existing account with us?");
+			System.out.println("");
 			System.out.println("Answer 'yes' if you do.  Answer 'no' if you do not.");
 			System.out.println("If you would instead like to exit this program, answer 'out'");
 			System.out.print("Type your answer here and then press the enter key: ");
@@ -186,12 +186,10 @@ public abstract class BankApplication {
 		System.out.println("4: Withdraw funds from an existing account");
 		System.out.println("5: Transfer funds to another one of your accounts");
 		System.out.println("6: View your transaction history");
-		System.out.println(
-				"To logout, simply press the enter key when prompted to make a selection from the above options");
 		System.out.println("");
-		System.out.print("Select one of the options here by its number and then "
-				+ "press the enter key (for example, type in '1' if you want to open a new account): ");
-
+		System.out.println("To logout, press the enter key when prompted to make a selection");
+		System.out.println("");
+		System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
 		String option = UI.nextLine();
 		System.out.println("");
 		System.out.println("");
@@ -203,6 +201,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		case "2":
@@ -211,6 +211,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		case "3":
@@ -219,6 +221,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		case "4":
@@ -227,6 +231,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		case "5":
@@ -235,6 +241,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		case "6":
@@ -243,6 +251,8 @@ public abstract class BankApplication {
 					System.out.println();
 				return userPortalOverviewScreen(bms, bas, ts, UI, userName);
 			} else {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				break;
 			}
 		default:
@@ -347,6 +357,8 @@ public abstract class BankApplication {
 					System.out.println();
 				results = loginScreen(bms, UI, admin);
 				if (results[1].compareToIgnoreCase("True") == 0) {
+					for (int i = 0; i < 50; ++i)
+						System.out.println();
 					String s = adminPortalOverviewScreen(bms, UI, admin);
 					if (s.compareTo("exit") == 0) {
 						System.out.println("");
@@ -382,6 +394,8 @@ public abstract class BankApplication {
 				System.out.println("");
 				System.out.println("");
 				System.out.println("Terminating program...");
+				System.out.println("");
+				System.out.println("Program terminated");
 				UI.close();
 				return;
 			}

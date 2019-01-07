@@ -60,6 +60,9 @@ public class BankAccountService {
 	// Creates a list of a bank member's accounts (Unit test this method)
 	public List<BankAccount> retrieveAMembersBankAccounts(BankMember member) {
 		try {
+			if (member == null) {
+				return null;
+			}
 			Optional<List<BankAccount>> baListOpt = bankAccountDao.getAMembersAccounts(member);
 			if (!baListOpt.isPresent()) {
 				throw new NoSuchElementException();
@@ -74,20 +77,19 @@ public class BankAccountService {
 	public void printAMembersBankAccounts(List<BankAccount> baList, Scanner UI) {
 		System.out.println("Here are your current account(s) and their balance(s):");
 		System.out.println("");
-		System.out.println("Account Number" + "          " + "Account Type" + "          " + "Balance");
-		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Account Number" + "      " + "Account Type" + "        " + "Balance");
+		System.out.println("--------------------------------------------------------");
 		for (BankAccount ba : baList) {
-			System.out.println(ba.getAccountNo() + "          " + ba.getAccountType() + "          " + "$"
+			System.out.println(ba.getAccountNo() + "          " + ba.getAccountType() + "            " + "$"
 					+ String.format("%.2f", ba.getBalance()));
 			System.out.println("");
 		}
-		System.out.println("");
 		System.out.println("");
 		System.out.print("Press the enter key to continue: ");
 		UI.nextLine();
 		System.out.println("");
 	}
-	
+
 	// Checks that the account type the user puts in is one of the two accepted words (Unit test this method)
 	public boolean accountTypeChecker(String accountTypeInput) {
 		try {
@@ -300,7 +302,7 @@ public class BankAccountService {
 				System.out.println("");
 				System.out.print("Returning you to your portal. Press the enter key to continue: ");
 				UI.nextLine();
-				return false;
+				return true;
 			}
 			System.out.println("The account numbered you entered is valid and the balance on the account is $0");
 			System.out.println("");
@@ -375,6 +377,9 @@ public class BankAccountService {
 	// Part of the view
 	public String acctNoAuthenticationDeposit(BankMember member, Scanner UI) {
 		List<BankAccount> baList = retrieveAMembersBankAccounts(member);
+		if (baList == null) {
+			return "";
+		}
 		while (true) {
 			printAMembersBankAccounts(baList, UI);
 			System.out
@@ -457,6 +462,14 @@ public class BankAccountService {
 		System.out.println("");
 		pinNumberAuthentication(member, UI);
 		String accountNumber = acctNoAuthenticationDeposit(member, UI);
+		if (accountNumber.compareTo("") == 0) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		String depositAmount = amountEntry(UI);
 		System.out.println("");
 		System.out.println("Depositing funds...");
@@ -473,7 +486,7 @@ public class BankAccountService {
 		if (!performDeposit(accountNumber, depositAsNum)) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
-			System.out.println("Deposit failed due to an unexpected error.");
+			System.out.println("The deposit failed due to an unexpected error.");
 			System.out.print("Press the enter key to exit: ");
 			UI.nextLine();
 			return false;
@@ -488,6 +501,9 @@ public class BankAccountService {
 	// Part of the view
 	public String acctNoAuthenticationWithdraw(BankMember member, Scanner UI) {
 		List<BankAccount> baList = retrieveAMembersBankAccounts(member);
+		if (baList == null) {
+			return "";
+		}
 		while (true) {
 			printAMembersBankAccounts(baList, UI);
 			System.out
@@ -549,6 +565,14 @@ public class BankAccountService {
 		System.out.println("");
 		pinNumberAuthentication(member, UI);
 		String accountNumber = acctNoAuthenticationWithdraw(member, UI);
+		if (accountNumber.compareTo("") == 0) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		String withdrawAmount = amountEntry(UI);
 		System.out.println("");
 		System.out.println("Attempting to withdraw funds...");
@@ -562,7 +586,8 @@ public class BankAccountService {
 			UI.nextLine();
 			return false;
 		}
-		if (performWithdraw(accountNumber, withdrawAsNum) == 0) {
+		int withdrawResult = performWithdraw(accountNumber, withdrawAsNum);
+		if (withdrawResult == 0) {
 			System.out.println("Insufficient funds");
 			System.out.println("");
 			System.out.println("Withdraw Denied");
@@ -570,10 +595,10 @@ public class BankAccountService {
 			System.out.print("Returning you to your portal. Press the enter key to continue: ");
 			UI.nextLine();
 			return false;
-		} else if (performWithdraw(accountNumber, withdrawAsNum) == -1) {
+		} else if (withdrawResult == -1) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
-			System.out.println("Withdraw failed due to an unexpected error.");
+			System.out.println("The withdraw failed due to an unexpected error.");
 			System.out.print("Press the enter key to exit: ");
 			UI.nextLine();
 			return false;
@@ -611,6 +636,14 @@ public class BankAccountService {
 		pinNumberAuthentication(member, UI);
 		String sourceAccountNumber = acctNoAuthenticationWithdraw(member, UI);
 		String endAccountNumber = acctNoAuthenticationDeposit(member, UI);
+		if (sourceAccountNumber.compareTo("") == 0 || endAccountNumber.compareTo("") == 0) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
+			System.out.println("This transaction could not be completed due to an unexpected error");
+			System.out.print("Press the enter key to exit: ");
+			UI.nextLine();
+			return false;
+		}
 		String transferAmount = amountEntry(UI);
 		System.out.println("");
 		System.out.println("Attempting to transfer funds...");
@@ -624,7 +657,8 @@ public class BankAccountService {
 			UI.nextLine();
 			return false;
 		}
-		if (performTransfer(sourceAccountNumber, endAccountNumber, transferAsNum) == 0) {
+		int transferResult = performTransfer(sourceAccountNumber, endAccountNumber, transferAsNum); 
+		if (transferResult == 0) {
 			System.out.println("Insufficient funds");
 			System.out.println("");
 			System.out.println("Transfer Denied");
@@ -632,10 +666,10 @@ public class BankAccountService {
 			System.out.print("Returning you to your portal. Press the enter key to continue: ");
 			UI.nextLine();
 			return false;
-		} else if (performTransfer(sourceAccountNumber, endAccountNumber, transferAsNum) == -1) {
+		} else if (transferResult == -1) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
-			System.out.println("Transfer failed due to an unexpected error.");
+			System.out.println("The transfer failed due to an unexpected error.");
 			System.out.print("Press the enter key to exit: ");
 			UI.nextLine();
 			return false;

@@ -31,9 +31,10 @@ public class TransactionService {
 		System.out.println("");
 		System.out.println("Here are all of the transactions you have made with us:");
 		System.out.println("");
-		System.out.println("Account Number(s) Involved " + "        " + "Transaction Type" + "      " + 
-				"Transaction Amount" + "           " + "Date/Time of Transaction");
-		System.out.println("----------------------------------------------------------------------------");
+		String tableTitle= "Account Number(s) Involved " + "        " + "Transaction Type" + "      " + 
+				"Transaction Amount" + "           " + "Date/Time of Transaction";
+		System.out.println(tableTitle);
+		System.out.println("----------------------------------------------------------------------------------------------------------------");
 		Optional<List<Transaction>> tlOpt = transactionDao.getAMembersTransactions(member);
 		if (!tlOpt.isPresent()) {
 			for (int i = 0; i < 50; ++i)
@@ -46,12 +47,14 @@ public class TransactionService {
 		List<Transaction> tl = tlOpt.get();
 		for (Transaction tn : tl) {
 			if (tn.getSourceAccountNo().compareTo(tn.getEndAccountNo()) == 0) {
-				System.out.println( tn.getSourceAccountNo() + "             " + tn.getTransactionType() + "            " + "$"+ 
-						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTransactionTime().toString());
+				System.out.println( tn.getSourceAccountNo() + "                           " + tn.getTransactionType() + 
+						"             " + "$"+ String.format("%.2f", tn.getTransactionAmount()) + 
+						"                  " + tn.getTransactionTime().toString());
 			} else {
-				System.out.println("from account "+ tn.getSourceAccountNo() + " to account " + tn.getEndAccountNo() +
-						"             " + tn.getTransactionType() + "            " + "$"+ 
-						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTransactionTime().toString());
+				System.out.println("from account "+ tn.getSourceAccountNo() +"              " + tn.getTransactionType() +
+						"             " + "$"+ String.format("%.2f", tn.getTransactionAmount()) + "                  " + 
+						tn.getTransactionTime().toString());
+				System.out.println(" to account " + tn.getEndAccountNo());
 			}
 			System.out.println("");
 		}

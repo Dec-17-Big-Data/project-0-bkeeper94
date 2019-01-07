@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class InvalidPinException extends RuntimeException {
+public class InvalidPinException extends Exception {
 
 	public InvalidPinException() {
 		super();

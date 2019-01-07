@@ -15,6 +15,8 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // Executes unit tests in ABC order
 
 //Important note: Do not run these JUnit tests individually
+
+//Important note: Connection failures cause these unit tests to fail (check logfile in "logs" folder for connection failures)
 public class BankMemberServiceTests {
 	
 	private static BankMemberService bms = BankMemberService.getService();
@@ -37,6 +39,9 @@ public class BankMemberServiceTests {
 		assertEquals(0, bms.addNewUser(newUserFirstName, newUserLastName, newUserName, newPassword, newPin));
 		
 		// Unable to find an edge case that would throw an SQL exception. No test for case when addNewUser method returns -1
+		
+		// Remove this test user so the JUnit test can pass multiple times
+		bms.performMemberRemoval(bms.getBankMember(newUserName));
 	}
 	
 	@Test
@@ -98,7 +103,15 @@ public class BankMemberServiceTests {
 		
 	@Test
 	public void performMemberRemovalTest() throws NoSuchElementException {
-		// Test removing Jane Blow, the BankMember added in addNewUserTest
+		// Add Jane Blow, the BankMember added in addNewUserTest, back in
+		String newUserFirstName = "jane";
+		String newUserLastName = "blow";
+		String newUserName = "testuser2";
+		String newPassword = "password";
+		String newPin = "3456";
+		bms.addNewUser(newUserFirstName, newUserLastName, newUserName, newPassword, newPin);
+		
+		// Test removing Jane Blow
 		assertTrue(bms.performMemberRemoval(bms.getBankMember("testuser2")));
 		
 		// Test an attempt to remove Jane Blow again
@@ -141,6 +154,9 @@ public class BankMemberServiceTests {
 	
 	@Test
 	public void retrieveAMembersBankAccountsTest() {
+		// Test a BankMember that is null
+		assertTrue(bms.retrieveAMembersBankAccounts(null) == null);
+		
 		// Test retrieving bank accounts for a member that is in the system but has not opened their first account
 		assertTrue(bms.retrieveAMembersBankAccounts(testUser).isEmpty());
 		

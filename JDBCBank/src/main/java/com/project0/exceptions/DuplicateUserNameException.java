@@ -1,6 +1,6 @@
 package com.project0.exceptions;
 
-public class DuplicateUserNameException extends RuntimeException {
+public class DuplicateUserNameException extends Exception {
 
 	public DuplicateUserNameException() {
 		super();
