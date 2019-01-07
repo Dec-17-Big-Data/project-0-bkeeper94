@@ -15,14 +15,14 @@ public class Transaction implements Serializable{
 	private Integer memberID;
 	private String transactionType;
 	private Double transactionAmount;
-	private Timestamp tranctionTime;
+	private Timestamp transactionTime;
 	
 	public Transaction() {
 		super();
 	}
 
 	public Transaction(Integer transactionID, String sourceAccountNo, String endAccountNo, Integer memberID,
-			String transactionType, Double transactionAmount, Timestamp tranctionTime) {
+			String transactionType, Double transactionAmount, Timestamp transactionTime) {
 		super();
 		this.transactionID = transactionID;
 		this.sourceAccountNo = sourceAccountNo;
@@ -30,7 +30,7 @@ public class Transaction implements Serializable{
 		this.memberID = memberID;
 		this.transactionType = transactionType;
 		this.transactionAmount = transactionAmount;
-		this.tranctionTime = tranctionTime;
+		this.transactionTime = transactionTime;
 	}
 
 	// No setters for these attributes as their values must be immutable
@@ -58,15 +58,15 @@ public class Transaction implements Serializable{
 		return transactionAmount;
 	}
 	
-	public Timestamp getTranctionTime() {
-		return tranctionTime;
+	public Timestamp getTransactionTime() {
+		return transactionTime;
 	}
 
 	@Override
 	public String toString() {
-		return "Transaction [transactionID=" + transactionID + ", sourceAccountID=" + sourceAccountNo
-				+ ", endAccountID=" + endAccountNo + ", memberID=" + memberID + ", transactionType=" + transactionType
-				+ ", transactionAmount=" + transactionAmount + ", tranctionTime=" + tranctionTime + "]";
+		return "Transaction [transactionID=" + transactionID + ", sourceAccountNo=" + sourceAccountNo
+				+ ", endAccountNo=" + endAccountNo + ", memberID=" + memberID + ", transactionType=" + transactionType
+				+ ", transactionAmount=" + transactionAmount + ", transactionTime=" + transactionTime + "]";
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class Transaction implements Serializable{
 		result = prime * result + ((endAccountNo == null) ? 0 : endAccountNo.hashCode());
 		result = prime * result + ((memberID == null) ? 0 : memberID.hashCode());
 		result = prime * result + ((sourceAccountNo == null) ? 0 : sourceAccountNo.hashCode());
-		result = prime * result + ((tranctionTime == null) ? 0 : tranctionTime.hashCode());
+		result = prime * result + ((transactionTime == null) ? 0 : transactionTime.hashCode());
 		result = prime * result + ((transactionAmount == null) ? 0 : transactionAmount.hashCode());
 		result = prime * result + ((transactionID == null) ? 0 : transactionID.hashCode());
 		result = prime * result + ((transactionType == null) ? 0 : transactionType.hashCode());
@@ -107,10 +107,10 @@ public class Transaction implements Serializable{
 				return false;
 		} else if (!sourceAccountNo.equals(other.sourceAccountNo))
 			return false;
-		if (tranctionTime == null) {
-			if (other.tranctionTime != null)
+		if (transactionTime == null) {
+			if (other.transactionTime != null)
 				return false;
-		} else if (!tranctionTime.equals(other.tranctionTime))
+		} else if (!transactionTime.equals(other.transactionTime))
 			return false;
 		if (transactionAmount == null) {
 			if (other.transactionAmount != null)

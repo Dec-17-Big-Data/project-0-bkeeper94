@@ -47,11 +47,11 @@ public class TransactionService {
 		for (Transaction tn : tl) {
 			if (tn.getSourceAccountNo().compareTo(tn.getEndAccountNo()) == 0) {
 				System.out.println( tn.getSourceAccountNo() + "             " + tn.getTransactionType() + "            " + "$"+ 
-						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTranctionTime().toString());
+						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTransactionTime().toString());
 			} else {
 				System.out.println("from account "+ tn.getSourceAccountNo() + " to account " + tn.getEndAccountNo() +
 						"             " + tn.getTransactionType() + "            " + "$"+ 
-						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTranctionTime().toString());
+						String.format("%.2f", tn.getTransactionAmount()) + "          " + tn.getTransactionTime().toString());
 			}
 			System.out.println("");
 		}
