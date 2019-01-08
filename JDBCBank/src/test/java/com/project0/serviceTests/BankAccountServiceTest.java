@@ -20,7 +20,7 @@ import org.junit.runners.MethodSorters;
 // Important note: Do not run these JUnit tests individually
 
 // Important note: Connection failures cause these unit tests to fail (check logfile in "logs" folder for connection failures)  
-public class BankAccountServiceTests {
+public class BankAccountServiceTest {
 
 	private static BankAccountService bas = BankAccountService.getService();
 
@@ -118,10 +118,10 @@ public class BankAccountServiceTests {
 
 		// Test this new account to make sure the method returns the balance as empty
 		List<BankAccount> ba = bas.retrieveAMembersBankAccounts(testUser); // has size 2
-		assertTrue(bas.accountBalanceIsEmpty(ba.get(1).getAccountNo()));
+		assertTrue(bas.accountBalanceIsEmpty(ba.get(0).getAccountNo()));
 
 		// Test the test user's checking account to make sure the method returns false
-		assertFalse(bas.accountBalanceIsEmpty(ba.get(0).getAccountNo()));
+		assertFalse(bas.accountBalanceIsEmpty(ba.get(1).getAccountNo()));
 	}
 
 	@Test
@@ -253,11 +253,11 @@ public class BankAccountServiceTests {
 
 		// Test a valid withdraw from a savings account
 		int expected1 = 1; // Successful withdraw
-		assertEquals(expected1, bas.performWithdraw(ba.get(1).getAccountNo(), 1000.00));
+		assertEquals(expected1, bas.performWithdraw(ba.get(0).getAccountNo(), 1000.00));
 
 		// Test an invalid withdraw due to overdraw
 		int expected2 = 0; // When the withdraw does not happen due to overdraw
-		assertEquals(expected2, bas.performWithdraw(ba.get(0).getAccountNo(), 50000.00));
+		assertEquals(expected2, bas.performWithdraw(ba.get(1).getAccountNo(), 50000.00));
 
 		// Test a withdraw on an account number that does not belong to testUser
 		int expected3 = -1; // When the transfer does not happen for reasons besides overdraw

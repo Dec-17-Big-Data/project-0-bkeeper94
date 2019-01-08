@@ -17,7 +17,7 @@ import org.junit.runners.MethodSorters;
 //Important note: Do not run these JUnit tests individually
 
 //Important note: Connection failures cause these unit tests to fail (check logfile in "logs" folder for connection failures)
-public class BankMemberServiceTests {
+public class BankMemberServiceTest {
 	
 	private static BankMemberService bms = BankMemberService.getService();
 	

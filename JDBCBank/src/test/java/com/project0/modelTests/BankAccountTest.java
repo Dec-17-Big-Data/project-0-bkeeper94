@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.project0.model.*;
 
-public class BankAccountTests {
+public class BankAccountTest {
 	
 	private static final BankAccount ba = new BankAccount(1000, "checking", 
 			"0000000000", 1000, 5000.00);

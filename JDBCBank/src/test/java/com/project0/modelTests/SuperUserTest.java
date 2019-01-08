@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.project0.model.*;
 
-public class SuperUserTests {
+public class SuperUserTest {
 	
 	private SuperUser admin = SuperUser.getAdmin();
 	

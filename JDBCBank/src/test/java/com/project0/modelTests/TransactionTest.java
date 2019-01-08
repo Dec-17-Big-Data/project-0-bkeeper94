@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.project0.model.*;
 
-public class TransactionTests {
+public class TransactionTest {
 	private static Integer fakeTransactionID = 1;
 	private static Integer fakeMemberID = 1000;
 	private static Timestamp tm = new Timestamp(2000000000l);

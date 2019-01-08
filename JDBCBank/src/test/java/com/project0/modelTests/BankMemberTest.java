@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class BankMemberTests {
+public class BankMemberTest {
 	
 	private static final BankMember bm = new BankMember(1000, "jrdoe", "jon", 
 			"doe", "pa55w0rd", "0000");

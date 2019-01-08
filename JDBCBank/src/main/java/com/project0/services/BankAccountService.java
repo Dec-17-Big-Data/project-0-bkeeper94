@@ -237,8 +237,9 @@ public class BankAccountService {
 
 	// Empty account balance checker (Unit test this method)
 	public boolean accountBalanceIsEmpty(String accountNumber) {
-		if (getBankAccount(accountNumber) != null) {
-			if (getBankAccount(accountNumber).getBalance() == 0) {
+		BankAccount ba= getBankAccount(accountNumber);
+		if (ba != null) {
+			if (ba.getBalance() == 0) {
 				return true;
 			}
 		}
