@@ -307,7 +307,7 @@ public class BankMemberService {
 			System.out.println("");
 			System.out.println("Removing profile...");
 			System.out.println("");
-			if (performMemberRemoval(member)) {
+			if (!performMemberRemoval(member)) {
 				System.out.println("The user profile could not be removed due to an unexpected error.");
 				System.out.print("Press the enter key to return to your portal: ");
 				return false;
@@ -346,11 +346,12 @@ public class BankMemberService {
 			System.out.print("Type in a new user name and then press the enter key: ");
 			String newUserName = UI.nextLine();
 			System.out.println("");
-			System.out.println("Here is your new user name: ");
+			System.out.println("Here is the new user name: ");
 			System.out.println(newUserName);
 			System.out.println("");
-			System.out.println("Confirm your new user name by typing in 'yes'");
-			System.out.println("OR if you would like to retry updating your user name, type in 'no'");
+			System.out.println("Confirm this new user name by typing in 'yes'");
+			System.out.println("OR if you would like to retry updating the user name, type in 'no'");
+			System.out.println("");
 			System.out.print("Type in your answer here and then press the enter key: ");
 			String answer = UI.nextLine();
 			if (answer.compareToIgnoreCase("yes") != 0) {
@@ -364,8 +365,8 @@ public class BankMemberService {
 			if (performUsernameUpdate(member, newUserName) == 0) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
-				System.out.println("User portal creation failed");
-				System.out.println("User name was already found in the system");
+				System.out.println("User name update failed");
+				System.out.println("The new user name was already found in the system");
 
 				System.out.print("Press the enter key to try again: ");
 				UI.nextLine();
@@ -404,14 +405,15 @@ public class BankMemberService {
 			System.out.println("");
 			System.out.println("You have selected to update a password");
 			System.out.println("");
-			System.out.print("Type in a new password and then press the enter key: ");
+			System.out.print("Type in the new password and then press the enter key: ");
 			String newPassword = UI.nextLine();
 			System.out.println("");
-			System.out.println("Here is your new password: ");
+			System.out.println("Here is the new password: ");
 			System.out.println(newPassword);
 			System.out.println("");
-			System.out.println("Confirm your new password by typing in 'yes'");
-			System.out.println("OR if you would like to retry updating your password, type in 'no'");
+			System.out.println("Confirm this new password by typing in 'yes'");
+			System.out.println("OR if you would like to retry updating the password, type in 'no'");
+			System.out.println("");
 			System.out.print("Type in your answer here and then press the enter key: ");
 			String answer = UI.nextLine();
 			if (answer.compareToIgnoreCase("no") == 0) {
@@ -462,11 +464,11 @@ public class BankMemberService {
 
 	// Part of the view
 	public void updatePinNumber(BankMember member, Scanner UI) {
-		System.out.println("");
-		System.out.println("You have selected to update a pin number ");
-		System.out.println("");
 		String newPinNumber = "";
 		while (true) {
+			System.out.println("");
+			System.out.println("You have selected to update a user's pin number ");
+			System.out.println("");
 			System.out.print("Enter the new pin number and then press the enter key: ");
 			newPinNumber = UI.nextLine();
 			if (newPinNumber.length() == 0) {
@@ -485,19 +487,22 @@ public class BankMemberService {
 					System.out.println();
 				continue;
 			}
-			if (!pinMismatchCheck(member, newPinNumber)) {
-				for (int i = 0; i < 50; ++i)
-					System.out.println();
-				System.out.println("The pin you entered does not match our records");
-				System.out.print("Press the enter key to try again: ");
-				UI.nextLine();
+			System.out.println("");
+			System.out.println("The new pin number was authenticated successfully");
+			System.out.println("");
+			System.out.println("Here is the new pin number: ");
+			System.out.println(newPinNumber);
+			System.out.println("");
+			System.out.println("Confirm this new pin by typing in 'yes'");
+			System.out.println("OR if you would like to retry updating the pin, type in 'no'");
+			System.out.println("");
+			System.out.print("Type in your answer here and then press the enter key: ");
+			String answer = UI.nextLine();
+			if (answer.compareToIgnoreCase("no") == 0) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
 				continue;
 			}
-			System.out.println("");
-			System.out.println("The new pin number was authenticated successfully");
-			System.out.println("");
 			break;
 		}
 		System.out.println("Updating pin number...");
@@ -535,6 +540,20 @@ public class BankMemberService {
 			System.out.print("Enter the new first name and then press the enter key: ");
 			newFirstName = UI.nextLine();
 			if (!nameInputChecker(newFirstName)) {
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
+				continue;
+			}
+			System.out.println("");
+			System.out.println("Here is the new first name: ");
+			System.out.println(newFirstName);
+			System.out.println("");
+			System.out.println("Confirm the new first name by typing in 'yes'");
+			System.out.println("OR if you would like to retry updating the first name, type in 'no'");
+			System.out.println("");
+			System.out.print("Type in your answer here and then press the enter key: ");
+			String answer = UI.nextLine();
+			if (answer.compareToIgnoreCase("no") == 0) {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
 				continue;
@@ -640,8 +659,10 @@ public class BankMemberService {
 			System.out.println("3: Pin Number");
 			System.out.println("4: First Name");
 			System.out.println("5: Last Name");
-			System.out.print("Select one of the options here by its number and then "
-					+ "press the enter key (for example, type in '1' if you want to change a user name): ");
+			System.out.println("");
+			System.out.println("To logout, press the enter key when prompted to make a selection");
+			System.out.println("OR");
+			System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
 			String selection = UI.nextLine();
 			switch (selection) {
 			case "1":
@@ -733,7 +754,7 @@ public class BankMemberService {
 
 	// Part of the view
 	public void adminRemoveUser(Scanner UI, SuperUser admin) {
-		System.out.println("You have selected the option to change a member's profile information");
+		System.out.println("You have selected the option to remove a user portal from the system");
 		System.out.println("");
 		masterPinCheck(UI, admin);
 		System.out.println("");

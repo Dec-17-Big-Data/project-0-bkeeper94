@@ -20,7 +20,7 @@ public abstract class BankApplication {
 			System.out.println("Do you have an existing account with us?");
 			System.out.println("");
 			System.out.println("Answer 'yes' if you do.  Answer 'no' if you do not.");
-			System.out.println("If you would instead like to exit this program, answer 'out'");
+			System.out.println("If you would instead like to exit this program, answer 'exit'");
 			System.out.print("Type your answer here and then press the enter key: ");
 			s = UI.nextLine();
 			if (s.compareToIgnoreCase("yes") == 0 || s.compareToIgnoreCase("no") == 0
@@ -188,7 +188,7 @@ public abstract class BankApplication {
 		System.out.println("6: View your transaction history");
 		System.out.println("");
 		System.out.println("To logout, press the enter key when prompted to make a selection");
-		System.out.println("");
+		System.out.println("OR");
 		System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
 		String option = UI.nextLine();
 		System.out.println("");
@@ -291,11 +291,9 @@ public abstract class BankApplication {
 		System.out.println("3: Update a user's profile and login information");
 		System.out.println("4: View all users as a list");
 		System.out.println("");
-		System.out.println("To logout, simply press the enter key when ");
-		System.out.println("prompted to make a selection from the above options");
-		System.out.println("");
-		System.out.print("Select one of the options here by its number and then "
-				+ "press the enter key (for example, type in '1' if you want to add a new user): ");
+		System.out.println("To logout, press the enter key when prompted to make a selection");
+		System.out.println("OR");
+		System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
 		String option = UI.nextLine();
 		System.out.println("");
 		System.out.println("");
