@@ -621,9 +621,13 @@ public class BankMemberService {
 					.print("Confirm your identity as admin by typing in the master pin and then press the enter key: ");
 			String pinInput = UI.nextLine();
 			if (pinInput.compareTo(admin.getMasterPin()) != 0) {
+				System.out.println("");
 				System.out.println("Invalid pin input");
 				System.out.print("Try again by pressing the enter key: ");
 				UI.nextLine();
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
+				continue;
 			}
 			break;
 		}
@@ -763,9 +767,13 @@ public class BankMemberService {
 		String userToUpdate = retrieveAUserNameFromList(UI);
 		BankMember bm = getBankMember(userToUpdate);
 		if (bm == null) {
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
 			System.out.println("This user name is not in the database");
 			System.out.print("Press the enter key to try another search: ");
 			UI.nextLine();
+			for (int i = 0; i < 50; ++i)
+				System.out.println();
 			adminRemoveUser(UI, admin);
 		}
 		List<BankAccount> ba = retrieveAMembersBankAccounts(bm); 
@@ -805,6 +813,7 @@ public class BankMemberService {
 		System.out.println("");
 		System.out.print("Press the enter key to return to your portal: ");
 		UI.nextLine();
+		return;
 	}
 
 }

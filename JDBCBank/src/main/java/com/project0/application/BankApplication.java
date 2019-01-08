@@ -113,6 +113,7 @@ public abstract class BankApplication {
 		System.out.println("");
 		System.out.print("Here is your main user portal. Press the enter key to continue: ");
 		UI.nextLine();
+		System.out.println("");
 		// Handle the two cases when the user has no bank accounts on file
 		if (baList.isEmpty()) {
 			String s = "";

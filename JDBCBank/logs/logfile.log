@@ -4096,3 +4096,209 @@ java.sql.SQLException: Invalid column name
 [TRACE] 2019-01-07 18:17:03.405 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
 [TRACE] 2019-01-07 18:17:03.405 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 8964529242
 [TRACE] 2019-01-07 18:17:03.671 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:44.301 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:44.983 [main] BankAccountOracle - Exit with(Optional[[]])
+[TRACE] 2019-01-07 20:53:44.985 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= BankMember [userID=-1, userName=john, firstName=doe, lastName=jdoe123, passWord=password, pinNumber=1234]
+[TRACE] 2019-01-07 20:53:44.985 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= savings
+[TRACE] 2019-01-07 20:53:44.986 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= 10000.0
+[TRACE] 2019-01-07 20:53:45.279 [main] BankAccountOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:53:45.280 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:45.280 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= checking
+[TRACE] 2019-01-07 20:53:45.280 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= 10500.0
+[TRACE] 2019-01-07 20:53:45.657 [main] BankAccountOracle - Exit with(Optional[101])
+[TRACE] 2019-01-07 20:53:45.660 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:45.660 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= savings
+[TRACE] 2019-01-07 20:53:45.660 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= 0.0
+[TRACE] 2019-01-07 20:53:45.890 [main] BankAccountOracle - Exit with(Optional[102])
+[TRACE] 2019-01-07 20:53:45.890 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:46.130 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0], BankAccount [accountID=102, accountType=savings, accountNo=3490656949, memberID=1, balance=0.0]]])
+[TRACE] 2019-01-07 20:53:46.130 [main] BankAccountOracle - Enter getBankAccount: Parameter= 3490656949
+[TRACE] 2019-01-07 20:53:46.326 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=102, accountType=savings, accountNo=3490656949, memberID=1, balance=0.0]])
+[TRACE] 2019-01-07 20:53:46.326 [main] BankAccountOracle - Enter getBankAccount: Parameter= 3490656949
+[TRACE] 2019-01-07 20:53:46.540 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=102, accountType=savings, accountNo=3490656949, memberID=1, balance=0.0]])
+[TRACE] 2019-01-07 20:53:46.540 [main] BankAccountOracle - Enter getBankAccount: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:46.740 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0]])
+[TRACE] 2019-01-07 20:53:46.740 [main] BankAccountOracle - Enter getBankAccount: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:47.020 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0]])
+[TRACE] 2019-01-07 20:53:47.020 [main] BankAccountOracle - Enter getBankAccount: Parameter= 1234567890
+[TRACE] 2019-01-07 20:53:47.231 [main] BankAccountOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:53:47.231 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:47.459 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0], BankAccount [accountID=102, accountType=savings, accountNo=3490656949, memberID=1, balance=0.0]]])
+[TRACE] 2019-01-07 20:53:47.460 [main] BankAccountOracle - Enter getBankAccount: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:47.720 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0]])
+[TRACE] 2019-01-07 20:53:47.722 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:47.958 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0], BankAccount [accountID=102, accountType=savings, accountNo=3490656949, memberID=1, balance=0.0]]])
+[TRACE] 2019-01-07 20:53:47.958 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:47.958 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 3490656949
+[TRACE] 2019-01-07 20:53:48.216 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:48.217 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:48.217 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 3490656949
+[TRACE] 2019-01-07 20:53:48.418 [main] BankAccountOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:53:48.418 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:48.419 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= savings
+[TRACE] 2019-01-07 20:53:48.419 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= 10000.0
+[TRACE] 2019-01-07 20:53:48.667 [main] BankAccountOracle - Exit with(Optional[103])
+[TRACE] 2019-01-07 20:53:48.667 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:48.908 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0], BankAccount [accountID=103, accountType=savings, accountNo=9998183635, memberID=1, balance=10000.0]]])
+[TRACE] 2019-01-07 20:53:48.908 [main] BankAccountOracle - Enter getBankAccount: Parameter= 9998183635
+[TRACE] 2019-01-07 20:53:49.117 [main] BankAccountOracle - Exit with(Optional[BankAccount [accountID=103, accountType=savings, accountNo=9998183635, memberID=1, balance=10000.0]])
+[TRACE] 2019-01-07 20:53:49.117 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:49.117 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 9998183635
+[TRACE] 2019-01-07 20:53:49.343 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:49.344 [main] BankAccountOracle - Enter getBankAccount: Parameter= 0000000000
+[TRACE] 2019-01-07 20:53:49.552 [main] BankAccountOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:53:49.552 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:49.759 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0]]])
+[TRACE] 2019-01-07 20:53:49.760 [main] BankAccountOracle - Enter depositFunds: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:49.760 [main] BankAccountOracle - Enter depositFunds: Parameter= 1000.0
+[TRACE] 2019-01-07 20:53:50.013 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:50.013 [main] BankAccountOracle - Enter depositFunds: Parameter= 1234567890
+[TRACE] 2019-01-07 20:53:50.014 [main] BankAccountOracle - Enter depositFunds: Parameter= 1000.0
+[TRACE] 2019-01-07 20:53:50.232 [main] BankAccountOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:53:50.233 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:50.233 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= savings
+[TRACE] 2019-01-07 20:53:50.233 [main] BankAccountOracle - Enter openNewBankAccount: Parameter= 10000.0
+[TRACE] 2019-01-07 20:53:50.442 [main] BankAccountOracle - Exit with(Optional[104])
+[TRACE] 2019-01-07 20:53:50.442 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:50.668 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=104, accountType=savings, accountNo=8907747200, memberID=1, balance=10000.0], BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=11500.0]]])
+[TRACE] 2019-01-07 20:53:50.669 [main] BankAccountOracle - Enter transferFunds: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:50.669 [main] BankAccountOracle - Enter transferFunds: Parameter= 8907747200
+[TRACE] 2019-01-07 20:53:50.669 [main] BankAccountOracle - Enter transferFunds: Parameter= 1000.0
+[TRACE] 2019-01-07 20:53:50.912 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:50.912 [main] BankAccountOracle - Enter transferFunds: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:50.912 [main] BankAccountOracle - Enter transferFunds: Parameter= 8907747200
+[TRACE] 2019-01-07 20:53:50.913 [main] BankAccountOracle - Enter transferFunds: Parameter= 50000.0
+[TRACE] 2019-01-07 20:53:51.129 [main] BankAccountOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:53:51.129 [main] BankAccountOracle - Enter transferFunds: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:51.130 [main] BankAccountOracle - Enter transferFunds: Parameter= 0000000000
+[TRACE] 2019-01-07 20:53:51.130 [main] BankAccountOracle - Enter transferFunds: Parameter= 100.0
+[TRACE] 2019-01-07 20:53:51.366 [main] BankAccountOracle - Exit with(Optional[-2])
+[TRACE] 2019-01-07 20:53:51.367 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:51.606 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=104, accountType=savings, accountNo=8907747200, memberID=1, balance=11000.0], BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=10500.0]]])
+[TRACE] 2019-01-07 20:53:51.607 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:51.607 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 1000.0
+[TRACE] 2019-01-07 20:53:51.842 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:51.842 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 8907747200
+[TRACE] 2019-01-07 20:53:51.842 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 50000.0
+[TRACE] 2019-01-07 20:53:52.090 [main] BankAccountOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:53:52.090 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 0000000000
+[TRACE] 2019-01-07 20:53:52.091 [main] BankAccountOracle - Enter withdrawFunds: Parameter= 100.0
+[TRACE] 2019-01-07 20:53:52.301 [main] BankAccountOracle - Exit with(Optional[-2])
+[TRACE] 2019-01-07 20:53:52.303 [main] BankAccountOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:52.564 [main] BankAccountOracle - Exit with(Optional[[BankAccount [accountID=104, accountType=savings, accountNo=8907747200, memberID=1, balance=11000.0], BankAccount [accountID=101, accountType=checking, accountNo=6087007610, memberID=1, balance=9500.0]]])
+[TRACE] 2019-01-07 20:53:52.564 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:52.565 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 8907747200
+[TRACE] 2019-01-07 20:53:52.820 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:53:52.821 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:53:52.821 [main] BankAccountOracle - Enter closeOldBankAccount: Parameter= 6087007610
+[TRACE] 2019-01-07 20:53:53.077 [main] BankAccountOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:04.636 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= jane
+[TRACE] 2019-01-07 20:54:04.638 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= blow
+[TRACE] 2019-01-07 20:54:04.638 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:04.638 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= password
+[TRACE] 2019-01-07 20:54:04.638 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= 3456
+[TRACE] 2019-01-07 20:54:05.255 [main] BankMemberOracle - Exit with(Optional[95])
+[TRACE] 2019-01-07 20:54:05.255 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= jane
+[TRACE] 2019-01-07 20:54:05.255 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= blow
+[TRACE] 2019-01-07 20:54:05.255 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:05.256 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= password
+[TRACE] 2019-01-07 20:54:05.256 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= 3456
+[TRACE] 2019-01-07 20:54:05.452 [main] BankMemberOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:54:05.452 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:05.710 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=95, userName=testuser2, firstName=jane, lastName=blow, passWord=password, pinNumber=3456]])
+[TRACE] 2019-01-07 20:54:05.710 [main] BankMemberOracle - Enter removeInactiveBankMember: Parameter= BankMember [userID=95, userName=testuser2, firstName=jane, lastName=blow, passWord=password, pinNumber=3456]
+[TRACE] 2019-01-07 20:54:05.929 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:05.930 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser
+[TRACE] 2019-01-07 20:54:06.153 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]])
+[TRACE] 2019-01-07 20:54:06.153 [main] BankMemberOracle - Enter getBankMember: Parameter= linus.torvald
+[TRACE] 2019-01-07 20:54:06.366 [main] BankMemberOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:54:06.366 [main] BankMemberOracle - Enter getBankMember: Parameter= linus.torvald
+[TRACE] 2019-01-07 20:54:06.542 [main] BankMemberOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:54:06.543 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser
+[TRACE] 2019-01-07 20:54:06.865 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]])
+[TRACE] 2019-01-07 20:54:06.865 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser
+[TRACE] 2019-01-07 20:54:07.086 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]])
+[TRACE] 2019-01-07 20:54:07.088 [main] BankMemberOracle - Enter updateFirstName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:07.089 [main] BankMemberOracle - Enter updateFirstName: Parameter= Joseph
+[TRACE] 2019-01-07 20:54:07.351 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:07.351 [main] BankMemberOracle - Enter updateFirstName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:07.351 [main] BankMemberOracle - Enter updateFirstName: Parameter= joe
+[TRACE] 2019-01-07 20:54:07.608 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:07.608 [main] BankMemberOracle - Enter updateLastName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:07.608 [main] BankMemberOracle - Enter updateLastName: Parameter= Bloe
+[TRACE] 2019-01-07 20:54:07.818 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:07.818 [main] BankMemberOracle - Enter updateLastName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:07.818 [main] BankMemberOracle - Enter updateLastName: Parameter= blow
+[TRACE] 2019-01-07 20:54:08.046 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:08.047 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= jane
+[TRACE] 2019-01-07 20:54:08.047 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= blow
+[TRACE] 2019-01-07 20:54:08.047 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:08.048 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= password
+[TRACE] 2019-01-07 20:54:08.048 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= 3456
+[TRACE] 2019-01-07 20:54:08.280 [main] BankMemberOracle - Exit with(Optional[96])
+[TRACE] 2019-01-07 20:54:08.281 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:08.482 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=96, userName=testuser2, firstName=jane, lastName=blow, passWord=password, pinNumber=3456]])
+[TRACE] 2019-01-07 20:54:08.482 [main] BankMemberOracle - Enter removeInactiveBankMember: Parameter= BankMember [userID=96, userName=testuser2, firstName=jane, lastName=blow, passWord=password, pinNumber=3456]
+[TRACE] 2019-01-07 20:54:08.672 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:08.672 [main] BankMemberOracle - Enter getBankMember: Parameter= testuser2
+[TRACE] 2019-01-07 20:54:08.878 [main] BankMemberOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 20:54:08.879 [main] BankMemberOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:54:08.879 [main] BankMemberOracle - Enter updatePassWord: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:08.879 [main] BankMemberOracle - Enter updatePassWord: Parameter= pa55w0rd
+[TRACE] 2019-01-07 20:54:09.078 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:09.078 [main] BankMemberOracle - Enter updatePassWord: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:09.079 [main] BankMemberOracle - Enter updatePassWord: Parameter= password
+[TRACE] 2019-01-07 20:54:09.271 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:09.271 [main] BankMemberOracle - Enter updatePinNumber: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:09.272 [main] BankMemberOracle - Enter updatePinNumber: Parameter= 0000
+[TRACE] 2019-01-07 20:54:09.506 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:09.507 [main] BankMemberOracle - Enter updatePinNumber: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:09.507 [main] BankMemberOracle - Enter updatePinNumber: Parameter= 7890
+[TRACE] 2019-01-07 20:54:09.784 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:09.784 [main] BankMemberOracle - Enter updateUserName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:09.785 [main] BankMemberOracle - Enter updateUserName: Parameter= testuser123
+[TRACE] 2019-01-07 20:54:10.017 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:10.017 [main] BankMemberOracle - Enter updateUserName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:10.017 [main] BankMemberOracle - Enter updateUserName: Parameter= testuser
+[TRACE] 2019-01-07 20:54:10.226 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 20:54:10.226 [main] BankMemberOracle - Enter updateUserName: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:10.226 [main] BankMemberOracle - Enter updateUserName: Parameter= benkeeper
+[TRACE] 2019-01-07 20:54:10.452 [main] BankMemberOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 20:54:10.453 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:10.663 [main] BankMemberOracle - Exit with(Optional[[]])
+[TRACE] 2019-01-07 20:54:10.664 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=0, userName=testuser, firstName=john, lastName=blow, passWord=password, pinNumber=7890]
+[TRACE] 2019-01-07 20:54:10.860 [main] BankMemberOracle - Exit with(Optional[[]])
+[TRACE] 2019-01-07 20:54:10.860 [main] BankMemberOracle - Enter getAllMembers: 
+[TRACE] 2019-01-07 20:54:11.054 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
+[TRACE] 2019-01-07 21:25:22.709 [main] BankMemberOracle - Enter getBankMember: Parameter= benkeeper
+[TRACE] 2019-01-07 21:25:23.340 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]])
+[TRACE] 2019-01-07 21:25:23.340 [main] BankMemberOracle - Enter getBankMember: Parameter= benkeeper
+[TRACE] 2019-01-07 21:25:23.539 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]])
+[TRACE] 2019-01-07 21:25:23.540 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]
+[TRACE] 2019-01-07 21:25:23.717 [main] BankMemberOracle - Exit with(Optional[[BankAccount [accountID=19, accountType=savings, accountNo=4100758954, memberID=21, balance=20000.0], BankAccount [accountID=17, accountType=checking, accountNo=0136751381, memberID=21, balance=42000.0]]])
+[TRACE] 2019-01-07 22:40:58.286 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= john ruth
+[TRACE] 2019-01-07 22:40:58.286 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= the hangman
+[TRACE] 2019-01-07 22:40:58.286 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= benkeeper
+[TRACE] 2019-01-07 22:40:58.286 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= tarantino
+[TRACE] 2019-01-07 22:40:58.286 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= 1234
+[TRACE] 2019-01-07 22:40:58.989 [main] BankMemberOracle - Exit with(Optional[-1])
+[TRACE] 2019-01-07 22:44:26.948 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= john
+[TRACE] 2019-01-07 22:44:26.948 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= q cardholder
+[TRACE] 2019-01-07 22:44:26.948 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= jqcardholder
+[TRACE] 2019-01-07 22:44:26.948 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= password
+[TRACE] 2019-01-07 22:44:26.948 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= 1234
+[TRACE] 2019-01-07 22:44:27.185 [main] BankMemberOracle - Exit with(Optional[101])
+[TRACE] 2019-01-07 22:44:38.468 [main] BankMemberOracle - Enter getAllMembers: 
+[TRACE] 2019-01-07 22:44:38.798 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234], BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
+[TRACE] 2019-01-07 22:44:56.701 [main] BankMemberOracle - Enter getBankMember: Parameter= 
+[TRACE] 2019-01-07 22:44:56.888 [main] BankMemberOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 22:46:21.926 [main] BankMemberOracle - Enter getAllMembers: 
+[TRACE] 2019-01-07 22:46:22.153 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234], BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
+[TRACE] 2019-01-07 22:49:19.494 [main] BankMemberOracle - Enter getBankMember: Parameter= agent
+[TRACE] 2019-01-07 22:49:20.885 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234]])
+[TRACE] 2019-01-07 22:49:20.885 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234]
+[TRACE] 2019-01-07 22:49:21.213 [main] BankMemberOracle - Exit with(Optional[[]])
+[TRACE] 2019-01-07 22:49:21.213 [main] BankMemberOracle - Enter removeInactiveBankMember: Parameter= BankMember [userID=92, userName=agent, firstName=john, lastName=smith, passWord=thematrix, pinNumber=1234]
+[TRACE] 2019-01-07 22:49:21.596 [main] BankMemberOracle - Exit with(Optional[1])
+[TRACE] 2019-01-07 22:52:15.660 [main] BankMemberOracle - Enter getAllMembers: 
+[TRACE] 2019-01-07 22:52:15.928 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
