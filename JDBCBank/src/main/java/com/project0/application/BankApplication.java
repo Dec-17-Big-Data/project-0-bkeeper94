@@ -121,9 +121,11 @@ public abstract class BankApplication {
 				for (int i = 0; i < 50; ++i)
 					System.out.println();
 				System.out.println("You currently have no accounts with us");
+				System.out.println("");
 				System.out.println("If you are logging in for the first time, answer with 'first'");
-				System.out.println("If you have closed all your accounts with us and no longer "
-						+ "wish to remain a member, answer with 'exit'");
+				System.out.println("If you have closed all your accounts with us and no longer");
+				System.out.println("wish to remain a member, answer with 'exit'");
+				System.out.println("");
 				System.out.print("Type your answer here and then press the enter key: ");
 				s = UI.nextLine();
 				if (s.compareToIgnoreCase("first") == 0) {

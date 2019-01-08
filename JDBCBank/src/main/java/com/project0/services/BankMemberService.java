@@ -295,6 +295,7 @@ public class BankMemberService {
 			System.out.println("");
 			System.out.println("You have decided to remove your Bank of OOPs portal from the system");
 			System.out.println("Are you sure you would like to remove your profile?");
+			System.out.println("");
 			System.out.print("Confirm by typing in 'yes' and then press the enter key: ");
 			String input = UI.nextLine();
 			if (input.compareToIgnoreCase("yes") != 0) {
@@ -617,8 +618,8 @@ public class BankMemberService {
 	// Part of the view
 	public void masterPinCheck(Scanner UI, SuperUser admin) {
 		while (true) {
-			System.out
-					.print("Confirm your identity as admin by typing in the master pin and then press the enter key: ");
+			System.out.println("Confirm your identity as admin by typing");
+			System.out.print("in the master pin and then press the enter key: ");
 			String pinInput = UI.nextLine();
 			if (pinInput.compareTo(admin.getMasterPin()) != 0) {
 				System.out.println("");
@@ -707,7 +708,8 @@ public class BankMemberService {
 	// Part of the view
 	public String retrieveAUserNameFromList(Scanner UI) {
 		List<String> usersList = printListOfAllUsers(UI);
-		System.out.print("Type in the user name of the profile you wish " + "to update and then press the enter key: ");
+		System.out.println("Type in the user name of the profile you wish");
+		System.out.print("to update and then press the enter key: ");
 		String input = UI.nextLine();
 		if (usersList.contains(input)) {
 			int loc = usersList.indexOf(input);

@@ -4302,3 +4302,15 @@ java.sql.SQLException: Invalid column name
 [TRACE] 2019-01-07 22:49:21.596 [main] BankMemberOracle - Exit with(Optional[1])
 [TRACE] 2019-01-07 22:52:15.660 [main] BankMemberOracle - Enter getAllMembers: 
 [TRACE] 2019-01-07 22:52:15.928 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
+[TRACE] 2019-01-07 23:00:33.952 [main] BankMemberOracle - Enter getBankMember: Parameter= jbravo
+[TRACE] 2019-01-07 23:00:34.623 [main] BankMemberOracle - Exit with(Optional.empty)
+[TRACE] 2019-01-07 23:01:06.117 [main] BankMemberOracle - Enter getAllMembers: 
+[TRACE] 2019-01-07 23:01:06.353 [main] BankMemberOracle - Exit with(Optional[[BankMember [userID=81, userName=neo, firstName=thomas, lastName=anderson, passWord=thematrix, pinNumber=0123], BankMember [userID=1, userName=testuser, firstName=joe, lastName=blow, passWord=password, pinNumber=7890], BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234], BankMember [userID=21, userName=benkeeper, firstName=ben, lastName=keeper, passWord=bennyrk5, pinNumber=0310]]])
+[TRACE] 2019-01-07 23:01:47.399 [main] BankMemberOracle - Enter getBankMember: Parameter= jqcardholder
+[TRACE] 2019-01-07 23:01:47.680 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234]])
+[TRACE] 2019-01-07 23:01:47.680 [main] BankMemberOracle - Enter getBankMember: Parameter= jqcardholder
+[TRACE] 2019-01-07 23:01:47.904 [main] BankMemberOracle - Exit with(Optional[BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234]])
+[TRACE] 2019-01-07 23:01:47.904 [main] BankMemberOracle - Enter getAMembersAccounts: Parameter= BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234]
+[TRACE] 2019-01-07 23:01:48.123 [main] BankMemberOracle - Exit with(Optional[[]])
+[TRACE] 2019-01-07 23:04:09.757 [main] BankMemberOracle - Enter removeInactiveBankMember: Parameter= BankMember [userID=101, userName=jqcardholder, firstName=john, lastName=q cardholder, passWord=password, pinNumber=1234]
+[TRACE] 2019-01-07 23:04:10.244 [main] BankMemberOracle - Exit with(Optional[1])
