@@ -667,7 +667,8 @@ public class BankMemberService {
 			System.out.println("");
 			System.out.println("To logout, press the enter key when prompted to make a selection");
 			System.out.println("OR");
-			System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
+			System.out.println("Select one of the options above by typing in its number, ");
+			System.out.print("and then press the enter key: ");
 			String selection = UI.nextLine();
 			switch (selection) {
 			case "1":

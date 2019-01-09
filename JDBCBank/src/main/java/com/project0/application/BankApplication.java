@@ -14,6 +14,8 @@ public abstract class BankApplication {
 	private static String startScreen(Scanner UI) {
 		String s = "";
 		while (true) {
+			System.out.println("");
+			System.out.println("");
 			System.out.println("Welcome to the Bank Of Object Oriented Programmers (OOPs)");
 			System.out.println("");
 			System.out.println("");
@@ -192,7 +194,8 @@ public abstract class BankApplication {
 		System.out.println("");
 		System.out.println("To logout, press the enter key when prompted to make a selection");
 		System.out.println("OR");
-		System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
+		System.out.println("Select one of the options above by typing in its number, ");
+		System.out.print("and then press the enter key: ");
 		String option = UI.nextLine();
 		System.out.println("");
 		System.out.println("");
@@ -296,7 +299,8 @@ public abstract class BankApplication {
 		System.out.println("");
 		System.out.println("To logout, press the enter key when prompted to make a selection");
 		System.out.println("OR");
-		System.out.print("Select one of the options above by typing in its number, and then press the enter key: ");
+		System.out.println("Select one of the options above by typing in its number, ");
+		System.out.print("and then press the enter key: ");
 		String option = UI.nextLine();
 		System.out.println("");
 		System.out.println("");
@@ -362,8 +366,8 @@ public abstract class BankApplication {
 						System.out.println();
 					String s = adminPortalOverviewScreen(bms, UI, admin);
 					if (s.compareTo("exit") == 0) {
-						System.out.println("");
-						System.out.println("");
+						for (int i = 0; i < 50; ++i)
+							System.out.println();
 						System.out.println("Terminating program...");
 						UI.close();
 						return;
@@ -383,8 +387,8 @@ public abstract class BankApplication {
 					System.out.println();
 				results[0] = bms.portalCreation(UI);
 			} else if (resultOfStart.compareToIgnoreCase("exit") == 0) {
-				System.out.println("");
-				System.out.println("");
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				System.out.println("Terminating program...");
 				UI.close();
 				return;
@@ -392,8 +396,8 @@ public abstract class BankApplication {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
 			if (results[0].compareTo("no portal") == 0) {
-				System.out.println("");
-				System.out.println("");
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				System.out.println("Terminating program...");
 				System.out.println("");
 				System.out.println("Program terminated");
@@ -402,8 +406,8 @@ public abstract class BankApplication {
 			}
 			String s = userPortalOverviewScreen(bms, bas, ts, UI, results[0]);
 			if (s.compareToIgnoreCase("exit") == 0) {
-				System.out.println("");
-				System.out.println("");
+				for (int i = 0; i < 50; ++i)
+					System.out.println();
 				System.out.println("Terminating program...");
 				UI.close();
 				return;
