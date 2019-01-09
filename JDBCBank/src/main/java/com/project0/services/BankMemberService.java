@@ -791,6 +791,8 @@ public class BankMemberService {
 			return;
 		}
 		if (!ba.isEmpty()) {
+			System.out.println("");
+			System.out.println("");
 			System.out.println("This user has existing accounts");
 			System.out.println("");
 			System.out.println("This user should not be removed from the database");
