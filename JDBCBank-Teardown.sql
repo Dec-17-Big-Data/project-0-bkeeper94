@@ -1,5 +1,5 @@
-drop table bankaccounts;
 drop table transactions;
+drop table bankaccounts;
 drop table bankmembers;
 drop procedure add_account;
 drop procedure add_member;
