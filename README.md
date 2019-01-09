@@ -1,5 +1,5 @@
 # project-0-bkeeper94
 
-# Master Branch
+# Other Branch
 
-# All work will be on branch "other" until merge is performed
+# All work will be on this branch until merge is performed
