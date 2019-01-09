@@ -100,7 +100,7 @@ public class BankMemberServiceTest {
 		
 		// Unable to find an edge case that would throw an SQL exception
 	}
-		
+	
 	@Test
 	public void performMemberRemovalTest() throws NoSuchElementException {
 		// Add Jane Blow, the BankMember added in addNewUserTest, back in

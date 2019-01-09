@@ -118,10 +118,10 @@ public class BankAccountServiceTest {
 
 		// Test this new account to make sure the method returns the balance as empty
 		List<BankAccount> ba = bas.retrieveAMembersBankAccounts(testUser); // has size 2
-		assertTrue(bas.accountBalanceIsEmpty(ba.get(0).getAccountNo()));
+		assertTrue(bas.accountBalanceIsEmpty(ba.get(1).getAccountNo()));
 
 		// Test the test user's checking account to make sure the method returns false
-		assertFalse(bas.accountBalanceIsEmpty(ba.get(1).getAccountNo()));
+		assertFalse(bas.accountBalanceIsEmpty(ba.get(0).getAccountNo()));
 	}
 
 	@Test
