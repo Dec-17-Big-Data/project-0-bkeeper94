@@ -25,6 +25,22 @@ public class TransactionService {
 		return transactionService;
 	}
 	
+	// Performs the collection of each transaction by a user (Unit test this method)
+	public List<Transaction> performGetMemberTransactions(BankMember member) {
+		try {
+			Optional<List<Transaction>> tlOpt = transactionDao.getAMembersTransactions(member);
+			if (!tlOpt.isPresent()) {
+				throw new NoSuchElementException();
+			}
+			return tlOpt.get();
+		} catch (NoSuchElementException e) {
+			return null;
+		}
+		
+		
+	}
+	
+	// Part of the view
 	public boolean getAMembersTransactions(BankMember member, Scanner UI) {
 		System.out.println("");
 		System.out.println("You have selected to view all of your transactions as a member of the Bank of OOPs");
@@ -35,8 +51,8 @@ public class TransactionService {
 				"Transaction Amount" + "           " + "Date/Time of Transaction";
 		System.out.println(tableTitle);
 		System.out.println("----------------------------------------------------------------------------------------------------------------");
-		Optional<List<Transaction>> tlOpt = transactionDao.getAMembersTransactions(member);
-		if (!tlOpt.isPresent()) {
+		List<Transaction> tl = performGetMemberTransactions(member);
+		if (tl == null) {
 			for (int i = 0; i < 50; ++i)
 				System.out.println();
 			System.out.println("We were unable to show you your transactions due to an unexpected error.");
@@ -44,7 +60,7 @@ public class TransactionService {
 			UI.nextLine();
 			return false;
 		}
-		List<Transaction> tl = tlOpt.get();
+		
 		for (Transaction tn : tl) {
 			if (tn.getSourceAccountNo().compareTo(tn.getEndAccountNo()) == 0) {
 				System.out.println( tn.getSourceAccountNo() + "                           " + tn.getTransactionType() + 
@@ -66,6 +82,8 @@ public class TransactionService {
 		return true;
 	}
 	
+	// Adds a transaction record to the database after each transfer, withdraw, and deposit
+	// (Unit test this method)
 	public boolean addNewTransaction(BankMember member, String sourceAccountNo, String endAccountNo,
 			Double amount, String transactionType) {
 		try {

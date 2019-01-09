@@ -42,6 +42,8 @@ public class ConnectionUtil {
 			String password = props.getProperty("jdbc.password");
 
 			con = DriverManager.getConnection(endpoint, username, password);
+			connectionInstance = con;
+			log.trace("Connection Established");
 			return con;
 		} catch (Exception e) {
 			log.error("Unable to get connection to database");
